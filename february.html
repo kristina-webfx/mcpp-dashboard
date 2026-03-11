@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCPP · February 2026 Roadmap Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0E1623;
+    --bg2:      #1C2C48;
+    --bg3:      #142034;
+    --border:   #263A5F;
+    --border2:  #182236;
+    --text:     #F2F2F2;
+    --text2:    #D2DCEE;
+    --text3:    #A9B4BC;
+    --muted:    #829DCE;
+    --dim:      #4C74B9;
+    --blue:     #207DE9;
+    --blue2:    #84B9F5;
+    --green:    #41D48C;
+    --teal:     #4DC1B9;
+    --yellow:   #FFD12D;
+    --orange:   #F7941D;
+    --red:      #F04D50;
+    --purple:   #92278F;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 60px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #142034 0%, #1C2C48 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .header-logo { height: 22px; }
+  .header-divider { width: 1px; height: 26px; background: var(--border); }
+  .header-title-sub { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px; }
+  .header-title-main { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+  .header-badge {
+    background: rgba(32,125,233,0.12);
+    border: 1px solid rgba(32,125,233,0.25);
+    border-radius: 9999px;
+    padding: 4px 14px;
+    font-size: 11px;
+    color: var(--blue2);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .last-updated { font-size: 10px; color: var(--dim); margin-top: 2px; }
+
+  .main { padding: 20px 28px 0; max-width: 1400px; }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .kpi-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    transition: border-color 0.2s;
+  }
+  .kpi-card:hover { border-color: var(--blue); }
+  .kpi-val { font-size: 22px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+  .kpi-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  .progress-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 16px;
+  }
+  .progress-header { display: flex; justify-content: space-between; margin-bottom: 7px; align-items: center; }
+  .progress-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  .progress-pct { font-size: 14px; font-weight: 700; color: var(--text); }
+  .progress-track { height: 8px; border-radius: 9999px; background: var(--border); overflow: hidden; display: flex; }
+  .progress-done { background: linear-gradient(90deg, var(--green), #26B16D); transition: width 0.5s; }
+  .progress-flight { background: linear-gradient(90deg, var(--blue), var(--blue2)); transition: width 0.5s; }
+  .progress-legend { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+  .progress-legend span { font-size: 11px; font-weight: 600; }
+
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+  }
+  .filters input, .filters select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    padding: 6px 14px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .filters input { flex: 1 1 160px; min-width: 120px; }
+  .filters input:focus, .filters select:focus { border-color: var(--blue); }
+  .filters select { cursor: pointer; }
+  .filter-count { font-size: 11px; color: var(--dim); margin-left: auto; white-space: nowrap; }
+
+  .legend { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
+  .type-badge { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 3px; font-size: 10px; font-weight: 800; }
+  .legend-note { font-size: 11px; color: var(--dim); margin-left: 4px; }
+
+  .epic-group { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .epic-header {
+    display: flex; align-items: center; gap: 10px; padding: 11px 18px;
+    cursor: pointer; background: var(--bg3); border-bottom: 1px solid var(--border);
+    user-select: none; transition: background 0.15s;
+  }
+  .epic-header:hover { background: #1a2f4a; }
+  .epic-header.collapsed { border-bottom: none; }
+  .epic-chevron { color: var(--dim); font-size: 10px; transition: transform 0.15s; flex-shrink: 0; }
+  .epic-chevron.open { transform: rotate(90deg); }
+  .epic-name { flex: 1; font-size: 13px; font-weight: 700; color: var(--text2); min-width: 0; }
+  .epic-progress-wrap { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .epic-mini-bar { width: 56px; height: 5px; border-radius: 9999px; background: var(--border); overflow: hidden; }
+  .epic-mini-fill { height: 100%; border-radius: 9999px; transition: width 0.3s; }
+  .epic-count { font-size: 11px; font-weight: 700; min-width: 34px; text-align: right; }
+
+  .issue-table { width: 100%; }
+  .col-headers {
+    display: grid;
+    grid-template-columns: 20px 82px 1fr 128px 98px 128px 48px;
+    gap: 6px; padding: 6px 18px; border-bottom: 1px solid var(--border2);
+    font-size: 10px; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: 0.7px;
+  }
+  .issue-row {
+    display: grid;
+    grid-template-columns: 20px 82px 1fr 128px 98px 128px 48px;
+    gap: 6px; padding: 9px 18px; align-items: start;
+    border-bottom: 1px solid var(--border2); transition: background 0.1s;
+  }
+  .issue-row:last-child { border-bottom: none; }
+  .issue-row:hover { background: rgba(32,125,233,0.04); }
+  .issue-row.alt { background: rgba(255,255,255,0.013); }
+  .issue-row.alt:hover { background: rgba(32,125,233,0.04); }
+
+  .issue-type-icon { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 3px; font-size: 10px; font-weight: 800; margin-top: 1px; flex-shrink: 0; }
+  .issue-key { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--blue); text-decoration: none; transition: color 0.15s; }
+  .issue-key:hover { color: var(--blue2); text-decoration: underline; }
+  .issue-summary { font-size: 12px; color: var(--text2); line-height: 1.4; }
+  .issue-parent { font-size: 11px; color: var(--dim); margin-top: 2px; font-style: italic; }
+
+  .status-badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 9999px; font-size: 10px; font-weight: 700; padding: 2px 8px; white-space: nowrap; border: 1px solid transparent; }
+  .status-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+  .priority-cell { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; }
+  .priority-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .assignee-cell { font-size: 11px; }
+  .est-cell { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .no-results { text-align: center; padding: 48px; color: var(--dim); font-size: 14px; }
+
+  @media (max-width: 900px) {
+    .col-headers, .issue-row { grid-template-columns: 20px 72px 1fr 100px 80px; }
+    .col-headers span:nth-child(6), .col-headers span:nth-child(7),
+    .issue-row > *:nth-child(6), .issue-row > *:nth-child(7) { display: none; }
+  }
+  @media (max-width: 600px) {
+    .main { padding: 12px 14px 0; }
+    .header { padding: 12px 16px; }
+    .col-headers, .issue-row { grid-template-columns: 20px 1fr 90px; }
+    .col-headers span:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)),
+    .issue-row > *:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <img src="https://www.webfx.com/wp-content/uploads/2021/11/webfx-light.png" alt="WebFX" class="header-logo">
+    <div class="header-divider"></div>
+    <div>
+      <div class="header-title-sub">MCPP · PR Panthers RevenueCloudFX</div>
+      <div class="header-title-main">February 2026 Roadmap Dashboard</div>
+      <div class="last-updated" id="lastUpdated"></div>
+    </div>
+  </div>
+  <div>
+    <div class="header-badge">February 2026 · Jira</div>
+  </div>
+</header>
+
+<div class="main">
+  <div class="kpi-grid" id="kpiGrid"></div>
+  <div class="progress-card">
+    <div class="progress-header">
+      <span class="progress-label">Overall Progress</span>
+      <span class="progress-pct" id="progressPct">0% complete</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-done" id="progressDone" style="width:0%"></div>
+      <div class="progress-flight" id="progressFlight" style="width:0%"></div>
+    </div>
+    <div class="progress-legend" id="progressLegend"></div>
+  </div>
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="Search issues, keys or epics…">
+    <select id="statusFilter"></select>
+    <select id="assigneeFilter"></select>
+    <span class="filter-count" id="filterCount"></span>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div id="groupsContainer"></div>
+</div>
+
+<script>
+const ISSUES = [
+  { key:"MCPP-8908", summary:"Add scheduledFor and sentAt timestamps to SMS table and API", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:2.0 },
+  { key:"MCPP-8902", summary:"Create Send SMS webhook", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:4.0 },
+  { key:"MCPP-8831", summary:"Backfill PlaybookFX todos", type:"Task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"(No Epic)", parentStory:null, est:2.0 },
+  { key:"MCPP-8773", summary:"Backfill historic AdTechFX campaign data to deals", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"AdTechFX Attribution", parentStory:"Add AdTechFX Campaign/IDs to our Deals data", est:3.0 },
+  { key:"MCPP-8710", summary:"Add tokens API stoplight docs", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:1.0 },
+  { key:"MCPP-8681", summary:"Backfill for td_ad_views", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"AdTechFX Attribution", parentStory:"Add AdTechFX Campaign/IDs to our Deals data", est:3.0 },
+  { key:"MCPP-8544", summary:"Contacts campaign w/ initialSync should have a file in our bucket", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:3.0 },
+  { key:"MCPP-8543", summary:"[RAFX] Upload validation error persists after correction and prevents contacts from uploading (Dromo)", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:2.0 },
+  { key:"MCPP-8531", summary:"[BE] Add cloud-util like `canManageUser` that handles a list of users", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:3.0 },
+  { key:"MCPP-8526", summary:"BE: Prepend ReviewAccelerationFX to the filename", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:1.0 },
+  { key:"MCPP-8525", summary:"Implementation", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"AdTechFX Attribution", parentStory:"Add AdTechFX Campaign/IDs to our Deals data", est:6.0 },
+  { key:"MCPP-8474", summary:"Create SMS Delivery -remove/invalidate service", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:3.0 },
+  { key:"MCPP-8449", summary:"Liveramp API Discovery task", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:4.0 },
+  { key:"MCPP-8447", summary:"Create an abstraction to tell Sentry to create a Slack alert", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:8.0 },
+  { key:"MCPP-8442", summary:"PT35394_15: Improper Access Controls - CookieBot Functionality", type:"Bug", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"Pentest: Jan 2026", parentStory:null, est:3.0 },
+  { key:"MCPP-8441", summary:"PT35394_8: Broken Access Control: Site Settings Modification via IDOR", type:"Bug", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"Pentest: Jan 2026", parentStory:null, est:2.0 },
+  { key:"MCPP-8392", summary:"No contacts/companies synced to TTD in last 7 days", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:5.0 },
+  { key:"MCPP-8383", summary:"No impressions received from TTD", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:3.0 },
+  { key:"MCPP-8382", summary:"Data sent for archived campaign >1 day after campaign is archived", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:2.0 },
+  { key:"MCPP-8377", summary:"FE: Update webhooks in RAFX Dromo Uploader", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:3.0 },
+  { key:"MCPP-8348", summary:"Technical Planning", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Automated Conversion Feeds: Phase 2", parentStory:'Show "Sent to Google Ads" events on C360FX Customer Journey Timelines', est:3.0 },
+  { key:"MCPP-8260", summary:"Setup/figure out how to test with QA", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:2.0 },
+  { key:"MCPP-8259", summary:"Create Send SMS (direct) function", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:2.0 },
+  { key:"MCPP-8258", summary:"Create Send SMS Enqueue multi-service", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:8.0 },
+  { key:"MCPP-8257", summary:"Create SMS Delivery table + API Wrapper", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:6.0 },
+  { key:"MCPP-8250", summary:"Send SMS Functionality", type:"Story", status:"Under Review", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
+  { key:"MCPP-8249", summary:"BE - Add API to handle sends from FE", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
+  { key:"MCPP-8246", summary:"BE - Create backfill script for SMS configs", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:4.0 },
+  { key:"MCPP-8245", summary:"BE - Create Spanner SMS config table + API Wrappers", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:4.0 },
+  { key:"MCPP-8232", summary:"Ensure that EnvRad only sees Legacy", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:2.0 },
+  { key:"MCPP-8223", summary:'Update "No data groups updated" alert to create an Adtech team todo item', type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:4.0 },
+  { key:"MCPP-8196", summary:"[FE] - Update SMS Options submit logic", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:2.0 },
+  { key:"MCPP-8126", summary:"[FE] - Create hooks to communicate with BE APIs and add submit logic", type:"Sub-task", status:"To Do", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
+  { key:"MCPP-8125", summary:"[FE] - Add Preview SMS section to Send SMS form (Preview and custom message components)", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:6.0 },
+  { key:"MCPP-8124", summary:"[FE] - Add Preview SMS section to Send SMS form (Recipients and Location)", type:"Sub-task", status:"In Progress", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
+  { key:"MCPP-8123", summary:"[FE] - Add One-Time Send section to Send SMS form", type:"Sub-task", status:"To Do", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:5.0 },
+  { key:"MCPP-8122", summary:"[FE] - Add SMS Consent Collection section to Send SMS form", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:2.0 },
+  { key:"MCPP-8082", summary:"Add AdTechFX Campaign/IDs to our Deals data", type:"Story", status:"Done", priority:"Medium", assignee:"Kristina Pollard", group:"AdTechFX Attribution", parentStory:null, est:null },
+  { key:"MCPP-7642", summary:"Use Dromo as the uploader for RAFX email/SMS lists", type:"Story", status:"Done", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
+  { key:"MCPP-6474", summary:"Remove legacy password login option", type:"Story", status:"Backlog", priority:"Medium", assignee:null, group:"Fully Deprecate Password Login", parentStory:null, est:null },
+  { key:"MCPP-8798", summary:"Ensure SMS can launch while legacy email campaigns are still available", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:3.0 },
+  { key:"MCPP-8777", summary:"Pass requesting user with internal API calls that expect auth fields", type:"Task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"(No Epic)", parentStory:null, est:3.0 },
+  { key:"MCPP-8668", summary:"TE Dev access to update API keys", type:"Sub-task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:2.0 },
+  { key:"MCPP-8487", summary:"sms-send function DataIQ upgrades", type:"Task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"DataIQ", parentStory:null, est:3.0 },
+  { key:"MCPP-8318", summary:"[BE-macro] Use cloud-util to prevent endpoints from returning API keys", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:6.0 },
+  { key:"MCPP-8316", summary:"[BE-mono] Use cloud-util to prevent endpoints from returning API keys", type:"Sub-task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:6.0 },
+  { key:"MCPP-8216", summary:"Hide API Tokens in Global Permissions from Other FXers", type:"Story", status:"Done", priority:"High", assignee:null, group:"Security Enhancements", parentStory:null, est:null },
+  { key:"MCPP-8147", summary:"Add a field to BQ that shows if the feed is primary or secondary", type:"Task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"Automated Conversion Feeds: Phase 2", parentStory:null, est:3.0 },
+  { key:"MCPP-7592", summary:"Send Surveys: Build Send SMS tab", type:"Story", status:"To Do", priority:"High", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
+  { key:"MCPP-8745", summary:"Add a rule that prevents devs from viewing as coaches", type:"Sub-task", status:"Done", priority:"Highest", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:3.0 },
+  { key:"MCPP-7555", summary:"Send Surveys: Allow review solicitation via SMS Campaigns", type:"Story", status:"Done", priority:"Highest", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
+];
+
+const EPIC_ORDER = [...new Set(ISSUES.map(i => i.group))];
+const JIRA = 'https://webfx.atlassian.net/browse/';
+const NOW = new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
+
+const STATUS = {
+  'Done':          { color:'#41D48C', bg:'rgba(65,212,140,0.12)' },
+  'Merged':        { color:'#4DC1B9', bg:'rgba(77,193,185,0.12)' },
+  'In Progress':   { color:'#207DE9', bg:'rgba(32,125,233,0.15)' },
+  'Under Review':  { color:'#FFD12D', bg:'rgba(255,209,45,0.12)' },
+  'Needs Edits':   { color:'#F7941D', bg:'rgba(247,148,29,0.12)' },
+  'Needs Specs':   { color:'#F7941D', bg:'rgba(247,148,29,0.12)' },
+  'To Do':         { color:'#829DCE', bg:'rgba(130,157,206,0.10)' },
+  'Backlog':       { color:'#4C74B9', bg:'rgba(76,116,185,0.10)' },
+  'Declined':      { color:'#F04D50', bg:'rgba(240,77,80,0.12)' },
+};
+const PRI = { Highest:'#F04D50', High:'#F7941D', Medium:'#FFD12D', Low:'#84B9F5', Lowest:'#6E7B81' };
+const TYPE = {
+  'Story':   { sym:'S',  color:'#207DE9' },
+  'Sub-task':{ sym:'↳', color:'#4C74B9' },
+  'Bug':     { sym:'B',  color:'#F04D50' },
+  'Task':    { sym:'T',  color:'#9B59B6' },
+  'Spike':   { sym:'⚡', color:'#F7941D' },
+};
+
+const isDone   = s => ['Done','Merged','Declined'].includes(s);
+const isFlight = s => ['In Progress','Under Review','Needs Edits','Needs Specs'].includes(s);
+
+document.getElementById('lastUpdated').textContent = 'Last refreshed ' + NOW;
+
+const totDone   = ISSUES.filter(i => isDone(i.status)).length;
+const totFlight = ISSUES.filter(i => isFlight(i.status)).length;
+const totEst    = ISSUES.reduce((s,i) => s + (i.est||0), 0);
+const totUn     = ISSUES.filter(i => !i.assignee).length;
+
+const kpis = [
+  ['Total Issues', ISSUES.length, '#84B9F5'],
+  ['Done / Merged', totDone,      '#41D48C'],
+  ['In Flight',    totFlight,     '#207DE9'],
+  ['Est. Hours',   totEst+'h',    '#FFD12D'],
+  ['Unassigned',   totUn,         '#F7941D'],
+  ['Epics',        EPIC_ORDER.length, '#92278F'],
+];
+document.getElementById('kpiGrid').innerHTML = kpis.map(([l,v,c]) =>
+  `<div class="kpi-card"><div class="kpi-val" style="color:${c}">${v}</div><div class="kpi-label">${l}</div></div>`
+).join('');
+
+const pctDone   = Math.round(totDone   / ISSUES.length * 100);
+const pctFlight = Math.round(totFlight / ISSUES.length * 100);
+document.getElementById('progressPct').textContent    = pctDone + '% complete';
+document.getElementById('progressDone').style.width   = pctDone + '%';
+document.getElementById('progressFlight').style.width = pctFlight + '%';
+document.getElementById('progressLegend').innerHTML   =
+  `<span style="color:#41D48C">● ${totDone} done/merged</span>` +
+  `<span style="color:#207DE9">● ${totFlight} in flight</span>` +
+  `<span style="color:#4C74B9">● ${ISSUES.length-totDone-totFlight} not started</span>`;
+
+const allStatuses  = ['All', ...new Set(ISSUES.map(i => i.status))];
+const allAssignees = ['All', ...new Set(ISSUES.map(i => i.assignee||'Unassigned'))];
+document.getElementById('statusFilter').innerHTML   = allStatuses.map(s  => `<option>${s}</option>`).join('');
+document.getElementById('assigneeFilter').innerHTML = allAssignees.map(a => `<option>${a}</option>`).join('');
+
+document.getElementById('legend').innerHTML = Object.entries(TYPE).map(([name, cfg]) =>
+  `<div class="legend-item">
+    <span class="type-badge" style="background:${cfg.color}22;color:${cfg.color}">${cfg.sym}</span>
+    ${name}
+  </div>`
+).join('') + '<span class="legend-note">· Grouped by Epic</span>';
+
+const expanded = {};
+EPIC_ORDER.forEach(e => expanded[e] = true);
+
+function getFiltered() {
+  const q  = document.getElementById('searchInput').value.toLowerCase();
+  const fs = document.getElementById('statusFilter').value;
+  const fa = document.getElementById('assigneeFilter').value;
+  return ISSUES.filter(i => {
+    if (fs !== 'All' && i.status !== fs) return false;
+    if (fa !== 'All' && (i.assignee||'Unassigned') !== fa) return false;
+    if (q && !i.summary.toLowerCase().includes(q) && !i.key.toLowerCase().includes(q) && !i.group.toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function statusBadge(s) {
+  const cfg = STATUS[s] || STATUS['To Do'];
+  return `<span class="status-badge" style="background:${cfg.bg};color:${cfg.color};border-color:${cfg.color}44">
+    <span class="status-dot" style="background:${cfg.color}"></span>${s}
+  </span>`;
+}
+
+function renderIssueRow(issue, idx) {
+  const tc  = TYPE[issue.type] || TYPE['Story'];
+  const pc  = PRI[issue.priority] || '#829DCE';
+  const alt = idx % 2 === 1 ? ' alt' : '';
+  return `<div class="issue-row${alt}">
+    <span class="issue-type-icon" title="${issue.type}" style="background:${tc.color}22;color:${tc.color}">${tc.sym}</span>
+    <a class="issue-key" href="${JIRA}${issue.key}" target="_blank" rel="noopener">${issue.key}</a>
+    <div>
+      <div class="issue-summary">${issue.summary}</div>
+      ${issue.parentStory ? `<div class="issue-parent">↳ ${issue.parentStory}</div>` : ''}
+    </div>
+    ${statusBadge(issue.status)}
+    <div class="priority-cell">
+      <span class="priority-dot" style="background:${pc}"></span>
+      <span style="color:${pc}">${issue.priority}</span>
+    </div>
+    <div class="assignee-cell" style="color:${issue.assignee ? 'var(--text3)' : 'var(--dim)'};font-style:${issue.assignee ? 'normal':'italic'}">
+      ${issue.assignee||'Unassigned'}
+    </div>
+    <div class="est-cell">${issue.est != null ? issue.est+'h' : '—'}</div>
+  </div>`;
+}
+
+function renderGroups() {
+  const filtered = getFiltered();
+  const grouped  = {};
+  filtered.forEach(i => { (grouped[i.group] = grouped[i.group]||[]).push(i); });
+  document.getElementById('filterCount').textContent = filtered.length + ' of ' + ISSUES.length + ' issues';
+
+  const container = document.getElementById('groupsContainer');
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-results">No issues match your filters.</div>';
+    return;
+  }
+
+  container.innerHTML = EPIC_ORDER.filter(e => grouped[e]).map(epicName => {
+    const issues = grouped[epicName];
+    const done   = issues.filter(i => isDone(i.status)).length;
+    const pct    = issues.length ? Math.round(done / issues.length * 100) : 0;
+    const open   = expanded[epicName] !== false;
+    const barColor = pct === 100 ? '#41D48C' : '#207DE9';
+
+    return `<div class="epic-group">
+      <div class="epic-header${open ? '' : ' collapsed'}" onclick="toggleGroup('${epicName.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">
+        <span class="epic-chevron${open ? ' open' : ''}">▶</span>
+        <span class="epic-name">${epicName}</span>
+        <div class="epic-progress-wrap">
+          <div class="epic-mini-bar">
+            <div class="epic-mini-fill" style="width:${pct}%;background:${barColor}"></div>
+          </div>
+          <span class="epic-count" style="color:${pct===100?'#41D48C':'var(--muted)'}">${done}/${issues.length}</span>
+        </div>
+      </div>
+      ${open ? `<div class="issue-table">
+        <div class="col-headers">
+          <span></span><span>Key</span><span>Summary</span><span>Status</span><span>Priority</span><span>Assignee</span><span>Est.</span>
+        </div>
+        ${issues.map((issue, idx) => renderIssueRow(issue, idx)).join('')}
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function toggleGroup(name) {
+  expanded[name] = !(expanded[name] !== false);
+  renderGroups();
+}
+
+document.getElementById('searchInput').addEventListener('input', renderGroups);
+document.getElementById('statusFilter').addEventListener('change', renderGroups);
+document.getElementById('assigneeFilter').addEventListener('change', renderGroups);
+
+renderGroups();
+</script>
+</body>
+</html>
