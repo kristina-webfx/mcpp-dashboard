@@ -1,472 +1,914 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCPP · January 2026 Roadmap Dashboard</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+// Place your settings in the file "Packages/User/Preferences.sublime-settings",
+// which overrides the settings in here.
+//
+// Settings may also be placed in syntax-specific setting files, for
+// example, in Packages/User/Python.sublime-settings for python files.
+{
+	// Sets the colors used within the text area.
+	// The value "auto" will switch between the "light_color_scheme" and
+	// "dark_color_scheme" based on the operating system appearance.
+	"color_scheme": "Mariana.sublime-color-scheme",
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+	// Controls the "color_scheme" when set to "auto"
+	"light_color_scheme": "Breakers.sublime-color-scheme",
+	"dark_color_scheme": "Mariana.sublime-color-scheme",
 
-  :root {
-    --bg:       #0E1623;
-    --bg2:      #1C2C48;
-    --bg3:      #142034;
-    --border:   #263A5F;
-    --border2:  #182236;
-    --text:     #F2F2F2;
-    --text2:    #D2DCEE;
-    --text3:    #A9B4BC;
-    --muted:    #829DCE;
-    --dim:      #4C74B9;
-    --blue:     #207DE9;
-    --blue2:    #84B9F5;
-    --green:    #41D48C;
-    --teal:     #4DC1B9;
-    --yellow:   #FFD12D;
-    --orange:   #F7941D;
-    --red:      #F04D50;
-    --purple:   #92278F;
-  }
+	// Note that the font_face and font_size are overridden in the platform
+	// specific settings file, for example, "Preferences (Linux).sublime-settings".
+	// Because of this, setting them here will have no effect: you must set them
+	// in your User File Preferences.
+	"font_face": "",
+	"font_size": 10,
+	// The font size set when using "Reset Size"
+	"default_font_size": 10,
 
-  html { scroll-behavior: smooth; }
+	// Valid options on all platforms are:
+	//  - "no_bold": Disables bold text
+	//  - "no_italic": Disables italic text
+	// Antialiasing options:
+	//  - "no_antialias": Disables antialiasing
+	//  - "gray_antialias": Uses grayscale antialiasing instead of subpixel
+	// Ligature options:
+	//  - "no_liga": Disables standard ligatures (OpenType liga feature)
+	//  - "no_clig": Disables contextual ligatures (OpenType clig feature)
+	//  - "no_calt": Disables contextual alternatives (OpenType calt feature)
+	//  - "dlig": Enables discretionary ligatures (OpenType dlig feature)
+	//  - "ss01": Enables OpenType stylistic set 1. Can enable sets 1 to 10
+	//        by changing the last two digits.
+	// Windows-only options:
+	//  - "directwrite": (default) Use DirectWrite for font rendering
+	//  - "gdi": Use GDI for font rendering
+	//  - "dwrite_cleartype_classic": Only applicable to "directwrite" mode,
+	//        should render fonts similar to traditional GDI
+	//  - "dwrite_cleartype_natural": Only applicable to "directwrite" mode,
+	//        should render fonts similar to ClearType "natural quality" GDI
+	//  - "subpixel_antialias": Force ClearType antialiasing when disabled
+	//        at system level
+	// Mac-only options:
+	//  - "no_round": Don't round glyph widths for monospace fonts when
+	//        "font_size" is small.
+	"font_options": [],
+	// Font options for theme text. Valid options are the same as
+	// "font_options", except "no_bold" and "no_italic" are not supported
+	"theme_font_options": [],
 
-  body {
-    font-family: 'DM Sans', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding-bottom: 60px;
-    font-size: 14px;
-    line-height: 1.5;
-  }
+	// Characters that are considered to separate words
+	"word_separators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?",
 
-  .header {
-    background: linear-gradient(135deg, #142034 0%, #1C2C48 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .header-left { display: flex; align-items: center; gap: 14px; }
-  .header-logo { height: 22px; }
-  .header-divider { width: 1px; height: 26px; background: var(--border); }
-  .header-title-sub { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px; }
-  .header-title-main { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
-  .header-badge {
-    background: rgba(32,125,233,0.12);
-    border: 1px solid rgba(32,125,233,0.25);
-    border-radius: 9999px;
-    padding: 4px 14px;
-    font-size: 11px;
-    color: var(--blue2);
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  .last-updated { font-size: 10px; color: var(--dim); margin-top: 2px; }
+	// Characters that are considered to separate sub-words
+	"sub_word_separators": "_",
 
-  .main { padding: 20px 28px 0; max-width: 1400px; }
+	// Set to false to prevent line numbers being drawn in the gutter
+	"line_numbers": true,
 
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .kpi-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    transition: border-color 0.2s;
-  }
-  .kpi-card:hover { border-color: var(--blue); }
-  .kpi-val { font-size: 22px; font-weight: 800; line-height: 1; margin-bottom: 5px; }
-  .kpi-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+	// Set to false to hide the gutter altogether
+	"gutter": true,
 
-  .progress-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 20px;
-    margin-bottom: 16px;
-  }
-  .progress-header { display: flex; justify-content: space-between; margin-bottom: 7px; align-items: center; }
-  .progress-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
-  .progress-pct { font-size: 14px; font-weight: 700; color: var(--text); }
-  .progress-track { height: 8px; border-radius: 9999px; background: var(--border); overflow: hidden; display: flex; }
-  .progress-done { background: linear-gradient(90deg, var(--green), #26B16D); transition: width 0.5s; }
-  .progress-flight { background: linear-gradient(90deg, var(--blue), var(--blue2)); transition: width 0.5s; }
-  .progress-legend { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
-  .progress-legend span { font-size: 11px; font-weight: 600; }
+	// Spacing between the gutter and the text
+	"margin": 4,
 
-  .filters {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 16px;
-    margin-bottom: 16px;
-  }
-  .filters input, .filters select {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 9999px;
-    padding: 6px 14px;
-    color: var(--text);
-    font-size: 12px;
-    font-family: inherit;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .filters input { flex: 1 1 160px; min-width: 120px; }
-  .filters input:focus, .filters select:focus { border-color: var(--blue); }
-  .filters select { cursor: pointer; }
-  .filter-count { font-size: 11px; color: var(--dim); margin-left: auto; white-space: nowrap; }
+	// Fold buttons are the triangles shown in the gutter to fold regions of text
+	"fold_buttons": true,
 
-  .legend { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
-  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); }
-  .type-badge { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 3px; font-size: 10px; font-weight: 800; }
-  .legend-note { font-size: 11px; color: var(--dim); margin-left: 4px; }
+	// Hides the fold buttons unless the mouse is over the gutter
+	"fade_fold_buttons": true,
 
-  .epic-group { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
-  .epic-header {
-    display: flex; align-items: center; gap: 10px; padding: 11px 18px;
-    cursor: pointer; background: var(--bg3); border-bottom: 1px solid var(--border);
-    user-select: none; transition: background 0.15s;
-  }
-  .epic-header:hover { background: #1a2f4a; }
-  .epic-header.collapsed { border-bottom: none; }
-  .epic-chevron { color: var(--dim); font-size: 10px; transition: transform 0.15s; flex-shrink: 0; }
-  .epic-chevron.open { transform: rotate(90deg); }
-  .epic-name { flex: 1; font-size: 13px; font-weight: 700; color: var(--text2); min-width: 0; }
-  .epic-progress-wrap { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-  .epic-mini-bar { width: 56px; height: 5px; border-radius: 9999px; background: var(--border); overflow: hidden; }
-  .epic-mini-fill { height: 100%; border-radius: 9999px; transition: width 0.3s; }
-  .epic-count { font-size: 11px; font-weight: 700; min-width: 34px; text-align: right; }
+	// The style of code folding to use
+	// - "auto": Use whatever the default is for the syntax in use
+	// - "force_indentation": Always use indentation-based code folding
+	// - "scope_only": Only allow syntax-based code folding
+	"fold_style": "auto",
 
-  .issue-table { width: 100%; }
-  .col-headers {
-    display: grid;
-    grid-template-columns: 20px 82px 1fr 128px 98px 128px 48px;
-    gap: 6px; padding: 6px 18px; border-bottom: 1px solid var(--border2);
-    font-size: 10px; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: 0.7px;
-  }
-  .issue-row {
-    display: grid;
-    grid-template-columns: 20px 82px 1fr 128px 98px 128px 48px;
-    gap: 6px; padding: 9px 18px; align-items: start;
-    border-bottom: 1px solid var(--border2); transition: background 0.1s;
-  }
-  .issue-row:last-child { border-bottom: none; }
-  .issue-row:hover { background: rgba(32,125,233,0.04); }
-  .issue-row.alt { background: rgba(255,255,255,0.013); }
-  .issue-row.alt:hover { background: rgba(32,125,233,0.04); }
+	// Indicate modified lines in the gutter
+	// - true: Enables modified line indicators on all files
+	// - "auto": Enables modified line indicators on tracked files within Git
+	// - false: Disables modified line indicators
+	"mini_diff": true,
 
-  .issue-type-icon { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 3px; font-size: 10px; font-weight: 800; margin-top: 1px; flex-shrink: 0; }
-  .issue-key { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--blue); text-decoration: none; transition: color 0.15s; }
-  .issue-key:hover { color: var(--blue2); text-decoration: underline; }
-  .issue-summary { font-size: 12px; color: var(--text2); line-height: 1.4; }
-  .issue-parent { font-size: 11px; color: var(--dim); margin-top: 2px; font-style: italic; }
+	// Columns in which to display vertical rulers. Each entry may also be a
+	// list of the column, the ruler style and optionally the ruler width, for
+	// example: [[80, "solid", 2], 78, [90, "dotted"]]
+	"rulers": [],
 
-  .status-badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 9999px; font-size: 10px; font-weight: 700; padding: 2px 8px; white-space: nowrap; border: 1px solid transparent; }
-  .status-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+	// Controls how ruler lines are drawn
+	// - "dotted": Drawn as a dotted line
+	// - "stippled": Drawn as a stippled line
+	// - "solid": Drawn as a solid line
+	"ruler_style": "dotted",
 
-  .priority-cell { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; }
-  .priority-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .assignee-cell { font-size: 11px; }
-  .est-cell { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
-  .no-results { text-align: center; padding: 48px; color: var(--dim); font-size: 14px; }
+	// Controls how wide ruler lines are drawn
+	"ruler_width": 1.0,
 
-  @media (max-width: 900px) {
-    .col-headers, .issue-row { grid-template-columns: 20px 72px 1fr 100px 80px; }
-    .col-headers span:nth-child(6), .col-headers span:nth-child(7),
-    .issue-row > *:nth-child(6), .issue-row > *:nth-child(7) { display: none; }
-  }
-  @media (max-width: 600px) {
-    .main { padding: 12px 14px 0; }
-    .header { padding: 12px 16px; }
-    .col-headers, .issue-row { grid-template-columns: 20px 1fr 90px; }
-    .col-headers span:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)),
-    .issue-row > *:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)) { display: none; }
-  }
-</style>
-</head>
-<body>
+	// Set to true to turn spell checking on by default
+	"spell_check": false,
 
-<header class="header">
-  <div class="header-left">
-    <img src="https://www.webfx.com/wp-content/uploads/2021/11/webfx-light.png" alt="WebFX" class="header-logo">
-    <div class="header-divider"></div>
-    <div>
-      <div class="header-title-sub">MCPP · PR Panthers RevenueCloudFX</div>
-      <div class="header-title-main">January 2026 Roadmap Dashboard</div>
-      <div class="last-updated" id="lastUpdated"></div>
-    </div>
-  </div>
-  <div>
-    <div class="header-badge">January 2026 · Jira</div>
-  </div>
-</header>
+	// The number of spaces a tab is considered equal to
+	"tab_size": 4,
 
-<div class="main">
-  <div class="kpi-grid" id="kpiGrid"></div>
-  <div class="progress-card">
-    <div class="progress-header">
-      <span class="progress-label">Overall Progress</span>
-      <span class="progress-pct" id="progressPct">0% complete</span>
-    </div>
-    <div class="progress-track">
-      <div class="progress-done" id="progressDone" style="width:0%"></div>
-      <div class="progress-flight" id="progressFlight" style="width:0%"></div>
-    </div>
-    <div class="progress-legend" id="progressLegend"></div>
-  </div>
-  <div class="filters">
-    <input type="text" id="searchInput" placeholder="Search issues, keys or epics…">
-    <select id="statusFilter"></select>
-    <select id="assigneeFilter"></select>
-    <span class="filter-count" id="filterCount"></span>
-  </div>
-  <div class="legend" id="legend"></div>
-  <div id="groupsContainer"></div>
-</div>
+	// Set to true to insert spaces when tab is pressed
+	"translate_tabs_to_spaces": false,
 
-<script>
-const ISSUES = [
-  { key:"MCPP-8773", summary:"Backfill historic AdTechFX campaign data to deals", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"AdTechFX Attribution", parentStory:"Add AdTechFX Campaign/IDs to our Deals data", est:3.0 },
-  { key:"MCPP-8681", summary:"Backfill for td_ad_views", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"AdTechFX Attribution", parentStory:"Add AdTechFX Campaign/IDs to our Deals data", est:3.0 },
-  { key:"MCPP-8531", summary:"[BE] Add cloud-util like `canManageUser` that handles a list of users", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:3.0 },
-  { key:"MCPP-8526", summary:"BE: Prepend ReviewAccelerationFX to the filename", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:1.0 },
-  { key:"MCPP-8525", summary:"Implementation", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"AdTechFX Attribution", parentStory:"Add AdTechFX Campaign/IDs to our Deals data", est:6.0 },
-  { key:"MCPP-8394", summary:"AdTechFX Navigation time alert", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"AdTechFX DataIQ Alerts", parentStory:"AdTechFX DataIQ Alerts", est:1.0 },
-  { key:"MCPP-8377", summary:"FE: Update webhooks in RAFX Dromo Uploader", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:3.0 },
-  { key:"MCPP-8362", summary:"BE: Create Handler cloud functions", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:8.0 },
-  { key:"MCPP-8315", summary:"[BE] Create cloud-util that decides whether user A is allowed to see user B's API key", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:6.0 },
-  { key:"MCPP-8287", summary:"Implementation", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"AdTechFX Events in C360FX Timelines", parentStory:"\"Viewed an Ad\" events should show on C360FX Timelines for UTM Parameter matches", est:8.0 },
-  { key:"MCPP-8249", summary:"BE - Add API to handle sends from FE", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
-  { key:"MCPP-8246", summary:"BE - Create backfill script for SMS configs", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:4.0 },
-  { key:"MCPP-8245", summary:"BE - Create Spanner SMS config table + API Wrappers", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:4.0 },
-  { key:"MCPP-8235", summary:"Tech Plan", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:1.0 },
-  { key:"MCPP-8232", summary:"Ensure that EnvRad only sees Legacy", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:2.0 },
-  { key:"MCPP-8222", summary:"BE: Create Entry+Base cloud functions", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:8.0 },
-  { key:"MCPP-8221", summary:"BE: Create Spanner tables", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:2.0 },
-  { key:"MCPP-8220", summary:"BE: Create API", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:4.0 },
-  { key:"MCPP-8219", summary:"FE for Dromo", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:5.0 },
-  { key:"MCPP-8215", summary:"Simplify FE hardcoded values (get-plan-block-quantity.js)", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Optimize useActiveSite", parentStory:"Optimize useActiveSite", est:3.0 },
-  { key:"MCPP-8196", summary:"[FE] - Update SMS Options submit logic", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:2.0 },
-  { key:"MCPP-8194", summary:'[FE] - Add "Delivery Schedule Overriding" section (Delivery Schedule table)', type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:3.0 },
-  { key:"MCPP-8193", summary:'[FE] - Add "Delivery Schedule Overriding" section (Description + Batch Size and Frequency fields)', type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:3.0 },
-  { key:"MCPP-8192", summary:"[FE] - Update SMS Options form layout and inputs", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:3.0 },
-  { key:"MCPP-8191", summary:'[FE] - Add "Use my own Twilio Account" checkbox', type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:2.0 },
-  { key:"MCPP-8126", summary:"[FE] - Create hooks to communicate with BE APIs and add submit logic", type:"Sub-task", status:"To Do", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
-  { key:"MCPP-8125", summary:"[FE] - Add Preview SMS section to Send SMS form (Preview and custom message components)", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:6.0 },
-  { key:"MCPP-8124", summary:"[FE] - Add Preview SMS section to Send SMS form (Recipients and Location)", type:"Sub-task", status:"In Progress", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
-  { key:"MCPP-8123", summary:"[FE] - Add One-Time Send section to Send SMS form", type:"Sub-task", status:"To Do", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:5.0 },
-  { key:"MCPP-8122", summary:"[FE] - Add SMS Consent Collection section to Send SMS form", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:2.0 },
-  { key:"MCPP-8121", summary:"[FE] - Create Send SMS base form structure using React Hook Form", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:3.0 },
-  { key:"MCPP-8120", summary:"[FE] - Create re-usable form section header for RAFX Send Surveys", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:2.0 },
-  { key:"MCPP-8082", summary:"Add AdTechFX Campaign/IDs to our Deals data", type:"Story", status:"Done", priority:"Medium", assignee:"Kristina Pollard", group:"AdTechFX Attribution", parentStory:null, est:null },
-  { key:"MCPP-8032", summary:"[BE] Contact deduping (drop first from MVP)", type:"Sub-task", status:"To Do", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Customer360FX Integration: Send surveys automatically", est:6.0 },
-  { key:"MCPP-8031", summary:"[BE] CFs to queue surveys", type:"Sub-task", status:"To Do", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Customer360FX Integration: Send surveys automatically", est:8.0 },
-  { key:"MCPP-8030", summary:"[BE] Audience automations table + API", type:"Sub-task", status:"To Do", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Customer360FX Integration: Send surveys automatically", est:6.0 },
-  { key:"MCPP-7920", summary:"Dan's DataIQ Alert Timeblock", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Knock out as many DataIQ alerts as you can during your timeblock!", parentStory:"Knock out as many DataIQ alerts as you can during your timeblock!", est:4.0 },
-  { key:"MCPP-7882", summary:"Investigate slow `mcfx/local-scans` endpoint", type:"Spike", status:"Backlog", priority:"Medium", assignee:"Jonn Eric Quintos", group:"LocalFX: Map Grid Ranker", parentStory:null, est:8.0 },
-  { key:"MCPP-7813", summary:"Update Billing Plans & Add-Ons page with RAFX SMS Deliverables", type:"Task", status:"Done", priority:"Medium", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:null, est:2.0 },
-  { key:"MCPP-7642", summary:"Use Dromo as the uploader for RAFX email/SMS lists", type:"Story", status:"Done", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
-  { key:"MCPP-7509", summary:"Ingest Social Media Messages from Nutshell into LeadManagerFX", type:"Story", status:"Backlog", priority:"Medium", assignee:null, group:"Omnichannel Inbox", parentStory:null, est:null },
-  { key:"MCPP-6604", summary:'"Viewed an Ad" events should show on C360FX Timelines for UTM Parameter matches', type:"Story", status:"Done", priority:"Medium", assignee:"Kristina Pollard", group:"AdTechFX Events in C360FX Timelines", parentStory:null, est:null },
-  { key:"MCPP-6489", summary:"Remove uses of no-longer-needed joins", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Optimize useActiveSite", parentStory:"Optimize useActiveSite", est:6.0 },
-  { key:"MCPP-6487", summary:"Move fxTeam logic to site-settings or company-settings", type:"Sub-task", status:"Declined", priority:"Medium", assignee:"jose", group:"Optimize useActiveSite", parentStory:"Optimize useActiveSite", est:4.0 },
-  { key:"MCPP-6486", summary:"Move plans join logic to iam/plans", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Optimize useActiveSite", parentStory:"Optimize useActiveSite", est:8.0 },
-  { key:"MCPP-6308", summary:"Add safeguards to PDL data import workflows to make sure they don't execute too early", type:"Task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"(No Epic)", parentStory:null, est:6.0 },
-  { key:"MCPP-5465", summary:"Add Pipeline data to Looker", type:"Task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Nutshell Integration: add Pipeline Data", parentStory:null, est:6.0 },
-  { key:"MCPP-8798", summary:"Ensure SMS can launch while legacy email campaigns are still available", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:3.0 },
-  { key:"MCPP-8668", summary:"TE Dev access to update API keys", type:"Sub-task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:2.0 },
-  { key:"MCPP-8438", summary:"PT35394_13: Broken Access Control: Billing Plans & Add-Ons", type:"Bug", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"Pentest: Jan 2026", parentStory:null, est:4.0 },
-  { key:"MCPP-8318", summary:"[BE-macro] Use cloud-util to prevent endpoints from returning API keys", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:6.0 },
-  { key:"MCPP-8316", summary:"[BE-mono] Use cloud-util to prevent endpoints from returning API keys", type:"Sub-task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:6.0 },
-  { key:"MCPP-8216", summary:"Hide API Tokens in Global Permissions from Other FXers", type:"Story", status:"Done", priority:"High", assignee:null, group:"Security Enhancements", parentStory:null, est:null },
-  { key:"MCPP-7592", summary:"Send Surveys: Build Send SMS tab", type:"Story", status:"To Do", priority:"High", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
-  { key:"MCPP-8209", summary:"ES Credentials: MCFX", type:"Task", status:"Done", priority:"Highest", assignee:"Daniel Stebbins", group:"(No Epic)", parentStory:null, est:4.0 },
-  { key:"MCPP-7561", summary:"Customer360FX Integration: Send surveys automatically", type:"Story", status:"Backlog", priority:"Highest", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
-  { key:"MCPP-7555", summary:"Send Surveys: Allow review solicitation via SMS Campaigns", type:"Story", status:"Done", priority:"Highest", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
-];
+	// If translate_tabs_to_spaces is true, use_tab_stops will make tab and
+	// backspace and delete insert/delete up to the next tabstop
+	"use_tab_stops": true,
 
-const EPIC_ORDER = [...new Set(ISSUES.map(i => i.group))];
-const JIRA = 'https://webfx.atlassian.net/browse/';
-const NOW = new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'numeric', minute:'2-digit' });
+	// Set to false to disable detection of tabs vs. spaces on load
+	"detect_indentation": true,
 
-const STATUS = {
-  'Done':          { color:'#41D48C', bg:'rgba(65,212,140,0.12)' },
-  'Merged':        { color:'#4DC1B9', bg:'rgba(77,193,185,0.12)' },
-  'In Progress':   { color:'#207DE9', bg:'rgba(32,125,233,0.15)' },
-  'Under Review':  { color:'#FFD12D', bg:'rgba(255,209,45,0.12)' },
-  'Needs Edits':   { color:'#F7941D', bg:'rgba(247,148,29,0.12)' },
-  'Needs Specs':   { color:'#F7941D', bg:'rgba(247,148,29,0.12)' },
-  'Technical Plan':{ color:'#84B9F5', bg:'rgba(132,185,245,0.12)' },
-  'To Do':         { color:'#829DCE', bg:'rgba(130,157,206,0.10)' },
-  'Backlog':       { color:'#4C74B9', bg:'rgba(76,116,185,0.10)' },
-  'Declined':      { color:'#F04D50', bg:'rgba(240,77,80,0.12)' },
-};
-const PRI = { Highest:'#F04D50', High:'#F7941D', Medium:'#FFD12D', Low:'#84B9F5', Lowest:'#6E7B81' };
-const TYPE = {
-  'Story':   { sym:'S',  color:'#207DE9' },
-  'Sub-task':{ sym:'↳', color:'#4C74B9' },
-  'Bug':     { sym:'B',  color:'#F04D50' },
-  'Task':    { sym:'T',  color:'#9B59B6' },
-  'Spike':   { sym:'⚡', color:'#F7941D' },
-};
+	// Calculates indentation automatically when pressing enter
+	"auto_indent": true,
 
-const isDone   = s => ['Done','Merged','Declined'].includes(s);
-const isFlight = s => ['In Progress','Under Review','Needs Edits','Needs Specs'].includes(s);
+	// Makes auto indent a little smarter, e.g., by indenting the next line
+	// after an if statement in C. Requires auto_indent to be enabled.
+	"smart_indent": true,
 
-document.getElementById('lastUpdated').textContent = 'Last refreshed ' + NOW;
+	// Adds whitespace up to the first open bracket when indenting. Requires
+	// auto_indent to be enabled.
+	"indent_to_bracket": false,
 
-const totDone   = ISSUES.filter(i => isDone(i.status)).length;
-const totFlight = ISSUES.filter(i => isFlight(i.status)).length;
-const totEst    = ISSUES.reduce((s,i) => s + (i.est||0), 0);
-const totUn     = ISSUES.filter(i => !i.assignee).length;
+	// Trims white space added by auto_indent when moving the caret off the
+	// line.
+	"trim_automatic_white_space": true,
 
-const kpis = [
-  ['Total Issues', ISSUES.length, '#84B9F5'],
-  ['Done / Merged', totDone,      '#41D48C'],
-  ['In Flight',    totFlight,     '#207DE9'],
-  ['Est. Hours',   totEst+'h',    '#FFD12D'],
-  ['Unassigned',   totUn,         '#F7941D'],
-  ['Epics',        EPIC_ORDER.length, '#92278F'],
-];
-document.getElementById('kpiGrid').innerHTML = kpis.map(([l,v,c]) =>
-  `<div class="kpi-card"><div class="kpi-val" style="color:${c}">${v}</div><div class="kpi-label">${l}</div></div>`
-).join('');
+	// Disables horizontal scrolling if enabled.
+	// May be set to true, false, or "auto", where it will be disabled for
+	// source code, and otherwise enabled.
+	"word_wrap": "auto",
 
-const pctDone   = Math.round(totDone   / ISSUES.length * 100);
-const pctFlight = Math.round(totFlight / ISSUES.length * 100);
-document.getElementById('progressPct').textContent    = pctDone + '% complete';
-document.getElementById('progressDone').style.width   = pctDone + '%';
-document.getElementById('progressFlight').style.width = pctFlight + '%';
-document.getElementById('progressLegend').innerHTML   =
-  `<span style="color:#41D48C">● ${totDone} done/merged</span>` +
-  `<span style="color:#207DE9">● ${totFlight} in flight</span>` +
-  `<span style="color:#4C74B9">● ${ISSUES.length-totDone-totFlight} not started</span>`;
+	// Set to a value other than 0 to force wrapping at that column rather than
+	// the window width. See "wrap_width_style" for extra options.
+	"wrap_width": 0,
 
-const allStatuses  = ['All', ...new Set(ISSUES.map(i => i.status))];
-const allAssignees = ['All', ...new Set(ISSUES.map(i => i.assignee||'Unassigned'))];
-document.getElementById('statusFilter').innerHTML   = allStatuses.map(s  => `<option>${s}</option>`).join('');
-document.getElementById('assigneeFilter').innerHTML = allAssignees.map(a => `<option>${a}</option>`).join('');
+	// Controls how the "wrap_width" setting is applied. The following options
+	// are available:
+	// - "constant": Always wrap at exactly the wrap width.
+	// - "min": Wrap at the wrap width or less if there is less space available.
+	"wrap_width_style": "constant",
 
-document.getElementById('legend').innerHTML = Object.entries(TYPE).map(([name, cfg]) =>
-  `<div class="legend-item">
-    <span class="type-badge" style="background:${cfg.color}22;color:${cfg.color}">${cfg.sym}</span>
-    ${name}
-  </div>`
-).join('') + '<span class="legend-note">· Grouped by Epic</span>';
+	// Set to false to prevent word wrapped lines from being indented to the same
+	// level
+	"indent_subsequent_lines": true,
 
-const expanded = {};
-EPIC_ORDER.forEach(e => expanded[e] = true);
+	// Draws text centered in the window rather than left aligned
+	"draw_centered": false,
 
-function getFiltered() {
-  const q  = document.getElementById('searchInput').value.toLowerCase();
-  const fs = document.getElementById('statusFilter').value;
-  const fa = document.getElementById('assigneeFilter').value;
-  return ISSUES.filter(i => {
-    if (fs !== 'All' && i.status !== fs) return false;
-    if (fa !== 'All' && (i.assignee||'Unassigned') !== fa) return false;
-    if (q && !i.summary.toLowerCase().includes(q) && !i.key.toLowerCase().includes(q) && !i.group.toLowerCase().includes(q)) return false;
-    return true;
-  });
+	// Controls auto pairing of quotes, brackets etc
+	"auto_match_enabled": true,
+
+	// Automatically close HTML and XML tags when </ is entered.
+	"auto_close_tags": true,
+
+	// Word list to use for spell checking. May also be a list of dictionaries.
+	"dictionary": "Packages/Language - English/en_US.dic",
+
+	// Sets which scopes are checked for spelling errors
+	"spelling_selector": "markup.raw, source string.quoted - punctuation - meta.preprocessor.include, source comment - source comment.block.preprocessor, -(source, constant, keyword, storage, support, variable, markup.underline.link, meta.tag)",
+
+	// Set to true to draw a border around the visible rectangle on the minimap.
+	// The color of the border will be determined by the "minimap_border" key
+	// in the color scheme
+	"draw_minimap_border": false,
+
+	// Always visualise the viewport on the minimap, as opposed to only
+	// showing it on mouse over
+	"always_show_minimap_viewport": false,
+
+	// Whether the minimap should scroll horizontally to match the viewport.
+	"minimap_horizontal_scrolling": false,
+
+	// If enabled, will highlight any line with a caret
+	"highlight_line": false,
+
+	// If enabled, will highlight the gutter for any line with a caret
+	"highlight_gutter": true,
+
+	// If enabled, will highlight the line number in the gutter for any line
+	// with a caret depending on the color scheme
+	"highlight_line_number": true,
+
+	// Valid values are "smooth", "phase", "blink" and "solid". Previous
+	// versions of Sublime Text used "smooth" by default.
+	"caret_style": "solid",
+
+	// These settings control the size of the caret
+	"caret_extra_top": 4,
+	"caret_extra_bottom": 4,
+	"caret_extra_width": 1,
+
+	// When enabled, the caret will be drawn as a rectangle, using the width
+	// of the current character
+	"block_caret": false,
+
+	// Set to false to disable underlining the brackets surrounding the caret
+	"match_brackets": true,
+
+	// Set to false if you'd rather only highlight the brackets when the caret is
+	// next to one
+	"match_brackets_content": true,
+
+	// Set to false to not highlight square brackets. This only takes effect if
+	// match_brackets is true
+	"match_brackets_square": true,
+
+	// Set to false to not highlight curly brackets. This only takes effect if
+	// match_brackets is true
+	"match_brackets_braces": true,
+
+	// Set to false to not highlight angle brackets. This only takes effect if
+	// match_brackets is true
+	"match_brackets_angle": false,
+
+	// Enable visualization of the matching tag in HTML and XML
+	"match_tags": true,
+
+	// Highlights other occurrences of the currently selected text
+	"match_selection": true,
+
+	// Additional spacing at the top of each line, in pixels
+	"line_padding_top": 0,
+
+	// Additional spacing at the bottom of each line, in pixels
+	"line_padding_bottom": 0,
+
+	// Set to false to disable scrolling past the end of the buffer.
+	// On Mac, this value is overridden in the platform specific settings, so
+	// you'll need to place this line in your user settings to override it.
+	//
+	// This setting may also be set to a number between 0.0 and 1.0 to specify
+	// how much scrolling past the end of the buffer should be allowed. 0.5
+	// scrolls halfway and 0.0 is the same as false.
+	"scroll_past_end": true,
+
+	// Set the number of context lines to show when scrolling to reveal. This
+	// affects all selection changes, like selection dragging, page-up/page-down
+	// and moving the caret.
+	"scroll_context_lines": 0,
+
+	// This controls what happens when pressing up or down when on the first
+	// or last line.
+	// On Mac, this value is overridden in the platform specific settings, so
+	// you'll need to place this line in your user settings to override it.
+	"move_to_limit_on_up_down": false,
+
+	// Controls when white space is drawn. Any of the following options may be
+	// combined:
+	// - "selection": Draw white space under the current selection.
+	// - "leading": Draw any white space between the beginning of a line and the
+	//              first character.
+	// - "enclosed": Draw white space enclosed by other characters.
+	// - "trailing": Draw white space following the last character on a line.
+	// - "isolated": Draw white space on lines containing no other characters.
+	// - "all": All of the above, ie. always draw white space.
+	//
+	// These options may be further refined by appending any of the following
+	// separated by an underscore:
+	// - "none": Don't draw this kind of white space.
+	// - "tabs": Only draw tabs here.
+	// - "spaces": Only draw spaces here.
+	// - "mixed": Only draw white space that does not match the indentation
+	//            style. For example if "translate_tabs_to_spaces" is true only
+	//            draw tabs.
+	// - "mixed_tabs": Like "mixed" but only draw tabs.
+	// - "mixed_spaces": Like "mixed" but only draw spaces.
+	// - "all": Draw both tabs and spaces. This is the default.
+	//
+	// Note that options are applied in sequence. So a later option may override
+	// an earlier one.
+	//
+	// Examples:
+	// - ["selection", "trailing", "isolated"]:
+	//     Draw white space at the end of any lines and under the selection.
+	//
+	// - ["all_tabs", "selection"]:
+	//     Draw tabs anywhere and any white space under the selection.
+	//
+	// - ["all_mixed"]:
+	//     Draw any white space that does not match the indentation style.
+	//
+	// - ["leading_mixed", "isolated_mixed"]:
+	//     Draw any indentation that does not match the indentation style.
+	//
+	// - ["selection_mixed_tabs"]:
+	//     Draw only tabs under the selection and only if the indentation style
+	//     is spaces.
+	//
+	// - ["all_tabs", "selection"]:
+	//     Draw all tabs and any white space under the selection.
+	//
+	// - ["all", "selection_none"]:
+	//     Inverse of the default. Draw white space everywhere except under the
+	//     selection.
+	"draw_white_space": ["selection"],
+
+	// Controls how non-ascii white space is drawn.
+	// - "none": Draw unicode white space verbatim, eg. hiding zero-width
+	//           spaces.
+	// - "punctuation": Draw codepoints of unicode white space defined as
+	//                  punctuation. This includes NBSP, but excludes the CJK
+	//                  Ideographic Space.
+	// - "all": Draw codepoints of all non-ascii space characters.
+	"draw_unicode_white_space": "punctuation",
+
+	// Controls whether unicode bidi characters are drawn as codepoints.
+	"draw_unicode_bidi": true,
+
+	// Control characters (or white space if enabled) can be drawn as either hex
+	// or using their abbreviation:
+	// - "hex": Draw characters using their hex encoding, ie. <0xA0>
+	// - "names": Draw characters using their abbreviation, ie. <NBSP>
+	"control_character_style": "hex",
+
+	// Controls what type of columns selection description ("Line X, Column Y"
+	// in the status bar) uses:
+	// - "virtual": Count virtual columns. Tabs count as their width in spaces.
+	// - "real": Count real columns. Tabs count as one column.
+	"selection_description_column_type": "virtual",
+
+	// Set to false to turn off the indentation guides.
+	// The color and width of the indent guides may be customized by editing
+	// the corresponding .tmTheme file, and specifying the colors "guide",
+	// "activeGuide" and "stackGuide"
+	"draw_indent_guides": true,
+
+	// Controls how the indent guides are drawn. Options may be combined, with
+	// valid options being:
+	//  - "draw_normal" - will draw plain indent guides for every indentation
+	//    group
+	//  - "draw_active" - will draw indent guides for the group
+	//    containing the caret in a different color
+	//  - "draw_active_single" - will draw the right-most indent guide in the
+	//    group containing the caret in a different color
+	//  - "solid" - can be combined with any of the draw_* options to draw
+	//    solid instead of stippled lines
+	"indent_guide_options": ["draw_normal"],
+
+	// Controls where trailing white space is removed on save.
+	// - "none": Do not remove any trailing white space on save.
+	// - "all": Remove all trailing white space on save.
+	// - "not_on_caret": Only remove white space that won't affect the caret.
+	//                   When used in conjunction with "save_on_focus_lost" and
+	//                   certain desktop environments that frequently make the
+	//                   application lose focus this avoids the caret jumping
+	//                   around a lot.
+	"trim_trailing_white_space_on_save": "none",
+
+	// Only trim white space on save for the parts of a file that have been
+	// modified by you. If there is trailing white space in other parts of the
+	// file they are left alone.
+	"trim_only_modified_white_space": true,
+
+	// Set to true to ensure the last line of the file ends in a newline
+	// character when saving
+	"ensure_newline_at_eof_on_save": false,
+
+	// Set to true to automatically save files when switching to a different file
+	// or application
+	"save_on_focus_lost": false,
+
+	// The encoding to use when the encoding can't be determined automatically.
+	// ASCII, UTF-8 and UTF-16 encodings will be automatically detected.
+	"fallback_encoding": "Western (Windows 1252)",
+
+	// Encoding used when saving new files, and files opened with an undefined
+	// encoding (e.g., plain ascii files). If a file is opened with a specific
+	// encoding (either detected or given explicitly), this setting will be
+	// ignored, and the file will be saved with the encoding it was opened
+	// with.
+	"default_encoding": "UTF-8",
+
+	// Files containing null bytes are opened as hexadecimal by default
+	"enable_hexadecimal_encoding": true,
+
+	// Determines what character(s) are used to terminate each line in new files.
+	// Valid values are 'system' (whatever the OS uses), 'windows' (CRLF) and
+	// 'unix' (LF only).
+	"default_line_ending": "system",
+
+	// When enabled, hovering over a word will show a popup listing all
+	// possible locations for the definition symbol. Requires index_files.
+	"show_definitions": true,
+
+	// When enabled, pressing tab will insert the best matching completion.
+	// When disabled, tab will only trigger snippets or insert a tab.
+	// Shift+tab can be used to insert an explicit tab when tab_completion is
+	// enabled.
+	"tab_completion": true,
+
+	// Enable auto complete to be triggered automatically when typing.
+	"auto_complete": true,
+
+	// The maximum file size where auto complete will be automatically triggered.
+	"auto_complete_size_limit": 4194304,
+
+	// The delay, in ms, before the auto complete window is shown after typing
+	"auto_complete_delay": 50,
+
+	// Controls what scopes auto complete will be triggered in
+	"auto_complete_selector": "meta.tag, source - comment - string.quoted.double.block - string.quoted.single.block - string.unquoted.heredoc",
+
+	// Additional situations to trigger auto complete
+	"auto_complete_triggers":
+	[
+		{"selector": "text.html, text.xml", "characters": "<"},
+		{"selector": "punctuation.accessor", "rhs_empty": true},
+	],
+
+	// By default, auto complete will commit the current completion on enter.
+	// This setting can be used to make it complete on tab instead.
+	// Completing on tab is generally a superior option, as it removes
+	// ambiguity between committing the completion and inserting a newline.
+	"auto_complete_commit_on_tab": false,
+
+	// Controls if auto complete is shown when snippet fields are active.
+	// Only relevant if auto_complete_commit_on_tab is true.
+	"auto_complete_with_fields": false,
+
+	// Controls what happens when pressing the up key while the first item in
+	// the auto complete window is selected: if false, the window is hidden,
+	// otherwise the last item in the window is selected. Likewise for the
+	// down key when the last item is selected.
+	"auto_complete_cycle": false,
+
+	// Auto complete will used indexed data to provide completions from other
+	// files when this is enabled
+	"auto_complete_use_index": true,
+
+	// If previously-selected completions should be automatically selected
+	"auto_complete_use_history": false,
+
+	// Controls how the auto complete results are reordered when typing:
+	// - "none" will fully reorder the results according to how well the
+	//   completion matches the typed text.
+	// - "some" will partially reorder the results, taking into account how
+	//   well the completion matches whats typed, and likelihood of the
+	//   completion.
+	// - "strict" will never reorder the results.
+	"auto_complete_preserve_order": "some",
+
+	// Add trailing symbols (e.g., '.', '()') if the auto complete engine
+	// thinks they're likely enough
+	"auto_complete_trailing_symbols": false,
+
+	// Add a space after completions if the auto complete engine thinks
+	// they're likely enough
+	"auto_complete_trailing_spaces": true,
+
+	// Snippets will not be included in the auto complete when this is
+	// false. They can still be triggered by typing their tab trigger in, and
+	// pressing tab when auto complete is not showing.
+	"auto_complete_include_snippets": true,
+
+	// When this is set to false, snippets won't be present in the auto
+	// complete dialog when typing, instead they'll only be shown in the auto
+	// complete dialog when it's explicitly triggered
+	"auto_complete_include_snippets_when_typing": true,
+
+	// Syntax will not be detected for files larger than this size. This makes
+	// loading large files significantly faster. Set to 0 to always perform
+	// syntax detection. The default is 16MiB.
+	"syntax_detection_size_limit": 16777216,
+
+	// A list of wildcard patterns specifying which snippet files to ignore.
+	// For example, to ignore all the default C++ snippets, set this to
+	// ["C++/*"]
+	"ignored_snippets": [],
+
+	// These settings hide various parts of the UI automatically when typing.
+	// Moving the mouse will show them again.
+	"auto_hide_menu": false,
+	"auto_hide_tabs": false,
+	"auto_hide_status_bar": false,
+
+	// Related to auto_hide_tabs, if this is enabled, tabs will be momentarily
+	// displayed when switching files. Tabs will automatically hidden upon
+	// resuming typing or after a fixed amount of time.
+	"reveal_tabs_with_timeout": false,
+
+	// When false, disables alt-tapping revealing the menu when hidden on Linux
+	// and Windows. Does not affect auto hiding or toggling the menu through
+	// the command palette.
+	"reveal_menu": true,
+
+	// If true, when typing the mouse pointer/cursor will be hidden. Moving the
+	// pointer will unhide it. This setting has no effect on macOS.
+	"hide_pointer_while_typing": true,
+
+	// By default, shift+tab will only unindent if the selection spans
+	// multiple lines. When pressing shift+tab at other times, it'll insert a
+	// tab character - this allows tabs to be inserted when tab_completion is
+	// enabled. Set this to true to make shift+tab always unindent, instead of
+	// inserting tabs.
+	"shift_tab_unindent": false,
+
+	// If true, the copy and cut commands will operate on the current line
+	// when the selection is empty, rather than doing nothing.
+	"copy_with_empty_selection": true,
+
+	// If true, the selected text will be copied into the find panel when it's
+	// shown.
+	// On Mac, this value is overridden in the platform specific settings.
+	"find_selected_text": true,
+
+	// If true, patterns copied from selected text to the find panel will
+	// automatically be escaped when doing a regex search.
+	"regex_auto_escape": true,
+
+	// When auto_find_in_selection is enabled, the "Find in Selection" flag will
+	// be enabled automatically when multiple lines of text are selected.
+	// "find_only" or "replace_only" may also be used to only enable this
+	// behavior for the find or replace panel respectively.
+	"auto_find_in_selection": false,
+
+	// This determines whether the find panel is closed when the "Find All"
+	// or "Replace All" buttons are pressed. Note this does not change the
+	// keybinding behavior.
+	"close_find_after_find_all": true,
+	"close_find_after_replace_all": true,
+
+	// Whether to highlight find results in the scrollbar
+	"highlight_find_results_in_scrollbar": true,
+
+	// The maximum number of find results to show in the scroll bar. If this
+	// number is exceeded no results will be shown. Use 0 to remove this limit.
+	"find_scroll_highlights_limit": 8192,
+
+	// The maximum file size that the "Highlight matches" option is used for.
+	// Highlighting all matches requires searching the whole file while typing
+	// the search query which can quickly get slow. Use 0 to remove this limit.
+	"find_highlight_matches_max_size": 16777216, // 16MiB
+
+	// Same as "find_highlight_matches_max_size" but used when regex is enabled.
+	"find_regex_highlight_matches_max_size": 1048576, // 1MiB
+
+	// The maximum output size for find-in-files. Prevents searches with a large
+	// number of results from using too much memory. Use 0 to remove this limit.
+	"find_in_files_max_result_size": 16777216, // 16MiB
+
+	// Files over this size will be skipped. This prevents searches from using
+	// up all available memory when large files are present. Note that on
+	// computers with many cores more than one file will be loaded at once. Use
+	// 0 to remove this limit.
+	"find_in_files_max_file_size": 104857600, // 100MiB
+
+	// Open search results from find in files buffer side-by-side.
+	"find_in_files_side_by_side": false,
+
+	// The number of context lines to show for each result
+	"find_in_files_context_lines": 2,
+
+	// The number of characters within the line surrounding each result to
+	// display beyond which text is omitted. A value of 0 will remove any limit.
+	"find_in_files_context_characters": 300,
+
+	// Error messages from failing to open and search files will be suppressed
+	// from results
+	"find_in_files_suppress_errors": false,
+
+	// When drag_text is enabled, clicking on selected text will begin a
+	// drag-drop operation.
+	"drag_text": true,
+
+	// Take focus when a file is dragged and dropped onto Sublime Text. On
+	// Windows this value is overidden to true in the platform specific
+	// settings.
+	"focus_on_file_drop": false,
+
+	//
+	// User Interface Settings
+	//
+
+	// The theme controls the look of Sublime Text's UI (buttons, tabs, scroll
+	// bars, etc)
+	// The value "auto" will switch between the "light_theme" and "dark_theme"
+	// based on the operating system appearance.
+	"theme": "auto",
+
+	// Controls the "theme" when to "auto"
+	"light_theme": "Default.sublime-theme",
+	"dark_theme": "Default Dark.sublime-theme",
+
+	// Adaptive theme only: controls if a custom or default title bar is used.
+	// Note that on Windows, the hamburger menu is used whenever this is
+	// enabled and the adaptive theme is in use.
+	"themed_title_bar": true,
+
+	// Controls the style of file tabs for the Default, Default Dark, and
+	// Adaptive themes.
+	// Options: "rounded", "square"
+	//   The value "angled" provides the tab style from Sublime Text 3, but is
+	//   only compatible with the Default and Adaptive themes, and will not
+	//   support new features like inactive pane dimming.
+	"file_tab_style": "rounded",
+
+	// If inactive sheets should have their background slightly modified to
+	// make input focus more obvious.
+	"inactive_sheet_dimming": true,
+
+	// Set to 0 to disable smooth scrolling. Set to a value between 0 and 1 to
+	// scroll slower, or set to larger than 1 to scroll faster
+	"scroll_speed": 1.0,
+
+	// Controls sidebar animation when expanding or collapsing folders
+	"tree_animation_enabled": true,
+
+	// Controls animation throughout the application
+	"animation_enabled": true,
+
+	// Makes tabs with modified files more visible
+	"highlight_modified_tabs": false,
+
+	// Hides the tab close button when false
+	"show_tab_close_buttons": true,
+
+	// Determines which side the close button is on
+	"show_tab_close_buttons_on_left": false,
+
+	// Show folders in the sidebar in bold
+	"bold_folder_labels": false,
+
+	// Draw divider lines between sections of the UI when using the Adaptive theme
+	"adaptive_dividers": false,
+
+	// Draw shadows under popup windows
+	"popup_shadows": true,
+
+	// Mac only. Controls use of macOS tabs in 10.12 and newer. Each native tab
+	// contains an entire project, thus allowing multiple projects in a single
+	// window. Valid values are "system", "preferred" and "disabled".
+	"native_tabs": "system",
+
+	// Whether new tabs should favor opening after the current tab or at the end
+	// of the list of tabs.
+	"open_tabs_after_current": true,
+
+	// Valid values are "system", "enabled" and "disabled"
+	"overlay_scroll_bars": "system",
+
+	// Allows tabs to scroll left and right, instead of simply shrinking
+	"enable_tab_scrolling": true,
+
+	// Hides the buttons for scrolling tabs left/right, requiring use of a
+	// trackpad or mouse scroll wheel
+	"hide_tab_scrolling_buttons": false,
+
+	// Hides the new tab button
+	"hide_new_tab_button": false,
+
+	// Display the toggle sidebar button in the status bar
+	"show_sidebar_button": true,
+
+	// Move the sidebar on the right side
+	"sidebar_on_right": false,
+
+	// Display the git status in the status bar, requires the show_git_status
+	// setting to be enabled
+	"show_git_status_in_status_bar": true,
+
+	// Display file encoding in the status bar
+	"show_encoding": false,
+
+	// Display line endings in the status bar
+	"show_line_endings": false,
+
+	// Display indentation in the status bar
+	"show_indentation": true,
+
+	// Display syntax in the status bar
+	"show_syntax": true,
+
+	// Show Line, Column in the status bar in full length, compact or completely
+	// hidden. Valid values are "enabled", "compact" and "disabled"
+	"show_line_column": "enabled",
+
+	// Display misspelled words in the status bar
+	"show_spelling_errors": true,
+
+	// Magnifies the entire user interface. Sublime Text must be restarted for
+	// this to take effect. 1.0 is normal scale, 0.0 allows for auto-detection
+	// based on text scale with older Linux configurations that don't fully
+	// support GTK display scaling.
+	"ui_scale": 0.0,
+
+	// Enables hardware accelerated rendering. This moves rendering to your GPU,
+	// allowing for faster rendering at higher resolutions. Changing this
+	// setting requires an application restart to take effect.
+	// - "none": Performs CPU rendering.
+	// - "opengl": Uses OpenGL for rendering. Minimum required version is 4.1
+	//
+	// On Mac, this value is overridden in the platform specific settings.
+	"hardware_acceleration": "none",
+
+	//
+	// Application Behavior Settings
+	//
+
+	// Exiting the application with hot_exit enabled will cause it to close
+	// immediately without prompting. Unsaved modifications and open files will
+	// be preserved and restored when next starting.
+	//
+	// Hot exit has different modes to choose from:
+	// - "always": Always perform a hot exit when the application exits. This
+	//             includes when the last window is closed on relevant
+	//             platforms.
+	// - "only_on_quit": Only perform a hot exit when the application is asked
+	//                   to exit, not when the last window is closed. This
+	//                   setting is only used on Windows and Linux.
+	// - "disabled": Disable hot exit.
+	"hot_exit": "always",
+
+	// Closing projects with hot_exit_projects enabled will cause it to close
+	// immediately without prompting. Unsaved modifications and open files will
+	// be preserved in the workspace file and restored when reopened.
+	"hot_exit_projects": true,
+
+	// remember_full_screen will allow Sublime Text to start in full screen
+	// mode if it was exited in full screen mode. When set to false, Sublime
+	// Text will never start in full screen mode.
+	"remember_full_screen": false,
+
+	// remember_workspace makes Sublime Text remember what workspace each window
+	// was in last. When set to false the OS left to determine which workspace
+	// a window is opened in. This doesn't work with Wayland.
+	"remember_workspace": true,
+
+	// remember_layout makes Sublime Text start with the same layout it closed
+	// with. Only applies when hot_exit is disabled.
+	"remember_layout": false,
+
+	// Whether the system's native recent files/folders list should be updated
+	// by Sublime Text.
+	"update_system_recent_files": true,
+
+	// Mac only. If the user's default shell should be invoked to obtain the
+	// user's customized environment variables. May be a boolean, or a string
+	// of the path the shell to invoke. Sublime Text must be restarted for this
+	// to take effect.
+	"shell_environment": true,
+
+	// Whether to reload a file if it has changed on disk.
+	"reload_file_on_change": true,
+
+	// Always prompt before reloading a file, even if the file hasn't been
+	// modified. If a file has unsaved changes, a prompt will always be shown.
+	// Will only show if "reload_file_on_change" is true.
+	"always_prompt_for_file_reload": false,
+
+	// Whether to reload files when Sublime Text is not in focus.
+	"reload_file_in_background": false,
+
+	// When reopening Sublime Text close saved files that have been deleted from
+	// the filesystem (Unsaved files will not be closed). If this setting is
+	// false no files will be closed, instead they will be restored as empty
+	// files.
+	//
+	// This is useful when working from an unstable networked file system where
+	// tabs would be lost if the connection wasn't active.
+	"close_deleted_files": true,
+
+	// When files are opened from a file explorer or from the command line, this
+	// controls whether a new window is created or not.
+	// - "never": Never open a new window unless no window is open.
+	// - "always": Always open files in a new window.
+	// - "finder_only": (macOS only) Only open files in a new window when
+	//                  opening them from finder or dragging onto the dock icon.
+	//
+	// On Mac, this value is overridden in the platform specific settings.
+	"open_files_in_new_window": "never",
+
+	// Mac only: This controls if an empty window is created at startup or not.
+	"create_window_at_startup": true,
+
+	// Mac only: Show recent files on the Touch Bar.
+	"show_navigation_bar": true,
+
+	// Mac only: Use global find clipboard.
+	"use_find_clipboard": true,
+
+	// Set to true to close windows as soon as the last file is closed, unless
+	// there's a folder open within the window.
+	// On Mac, this value is overridden in the platform specific settings, so
+	// you'll need to place this line in your user settings to override it.
+	"close_windows_when_empty": false,
+
+	// Show the full path to files in the title bar. On Mac, this value is
+	// overridden in the platform specific settings, with a default value of
+	// false.
+	"show_full_path": true,
+
+	// Show the relative path to files in the title bar. This overrides
+	// show_full_path for files that are listed in the sidebar, however
+	// show_full_path is still used for other files.
+	"show_rel_path": false,
+
+	// Show "project - file" or "file - project" in the title bar.
+	"show_project_first": false,
+
+	// Shows the Build Results panel when building. If set to false, the Build
+	// Results can be shown via the Tools/Build Results menu.
+	"show_panel_on_build": true,
+
+	// Shows build errors just under the line on which they occur.
+	"show_errors_inline": true,
+
+	// Shows git repository information next to files in sidebar and in
+	// the status bar. Sublime Text has to be restarted for this to take
+	// effect.
+	"show_git_status": true,
+
+	// Enables showing git status for a git repository in the user's home
+	// directory. This is disabled by default since it is typically accidental
+	// and can cause heavy CPU usage related to file system watches.
+	"allow_git_home_dir": false,
+
+	// This setting determines whether tracked Git files should be diffed
+	// against the index or HEAD.
+	// Valid values are "index" or "head"
+	"git_diff_target": "index",
+
+	// The path to the Sublime Merge executable. This should only be set if
+	// Sublime Merge is not installed in a standard location, such as when
+	// using a portable install. Set to 'null' to hide Sublime Merge
+	// integrations.
+	"sublime_merge_path": "",
+
+	// Preview file contents when clicking on a file in the sidebar. Double
+	// clicking or editing the preview will open the file and assign it a tab.
+	// - true: Always preview on click, including right click
+	// - false: Never preview
+	// - "only_left": Only preview on left click, right click will change the
+	//                selection but not preview the file.
+	"preview_on_click": true,
+
+	// Controls the behavior when clicking on a single file in the sidebar
+	// that's already open.
+	// - true: If the file is already open in any group it will be selected.
+	// - false: Only if the file is open in the focused group will it be
+	//          selected, otherwise a new view into the file is opened.
+	"select_across_groups": false,
+
+	// Controls the maximum number of lines kept in the console's history. Note
+	// a large limit will increase memory usage. Use 0 to remove any limit.
+	"console_max_history_lines": 3000,
+
+	// folder_exclude_patterns and file_exclude_patterns control which files are
+	// listed in folders on the sidebar. These can also be set on a per-
+	// project basis.
+	"folder_exclude_patterns": [".svn", ".git", ".hg", "CVS", ".Trash", ".Trash-*"],
+	"file_exclude_patterns": ["*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj","*.o", "*.a", "*.lib", "*.so", "*.dylib", "*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store", ".directory", "desktop.ini", "*.class", "*.psd", "*.db", "*.sublime-workspace"],
+	// These files will still show up in the sidebar, but won't be included in
+	// Goto Anything or Find in Files
+	"binary_file_patterns": ["*.jpg", "*.jpeg", "*.png", "*.gif", "*.ttf", "*.tga", "*.dds", "*.ico", "*.eot", "*.pdf", "*.swf", "*.jar", "*.zip"],
+
+	// Files that will be opened as an image rather than a text file. Files can
+	// still be opened as either text or an image vie the File menu
+	"image_file_patterns": ["*.jpeg", "*.jpg", "*.gif", "*.png", "*.ico", "*.bmp", "*.tga", "*.psd", "*.ppm", "*.pgm", "*.webp", "*.hdr"],
+
+	// File indexing parses all files in the sidebar, and builds an index of
+	// their symbols. This is required for Goto Definition to work.
+	"index_files": true,
+
+	// Set the number threads to use for indexing. A value of 0 will make
+	// Sublime Text guess based on the number of cores. Use the index_files
+	// setting to disable all workers. This requires a restart to take effect.
+	"index_workers": 0,
+
+	// Sets whether the indexer should exclude files ignored by git.
+	"index_exclude_gitignore": true,
+
+	// Whether unknown file extensions should be checked for indexing or skipped
+	// entirely. If a file extension is not being recognised we suggest
+	// setting/changing the default syntax for that extension instead of turning
+	// this setting off.
+	"index_skip_unknown_extensions": true,
+
+	// index_exclude_patterns indicate which files won't be indexed.
+	"index_exclude_patterns": ["*.log"],
+
+	// Determines whether Goto Anything should exclude files ignored by git.
+	"goto_anything_exclude_gitignore": false,
+
+	// Preview file contents in Goto Anything
+	"goto_anything_file_preview": true,
+
+	// When Vintage, the vi emulation package, is enabled
+	// (see ignored_packages, below), this setting controls if files are opened
+	// in command mode or insert mode by default
+	"vintage_start_in_command_mode": false,
+
+	// Yank commands can place the text in either an internal register, or in
+	// the system clipboard.
+	"vintage_use_clipboard": false,
+
+	// By default Vintage will interpret all ctrl+<key> key bindings as
+	// regular Sublime Text key bindings. Set this to true to make ctrl keys
+	// act as they do in vim, instead (e.g., ctrl+f to move forward a page).
+	"vintage_ctrl_keys": false,
+
+	// relative_line_numbers will draw each line number as the distance from
+	// the current line. Useful in conjunction with Vintage.
+	"relative_line_numbers": false,
+
+	// List any packages to ignore here. When removing entries from this list,
+	// a restart may be required if the package contains plugins.
+	"ignored_packages": ["Vintage"]
 }
-
-function statusBadge(s) {
-  const cfg = STATUS[s] || STATUS['To Do'];
-  return `<span class="status-badge" style="background:${cfg.bg};color:${cfg.color};border-color:${cfg.color}44">
-    <span class="status-dot" style="background:${cfg.color}"></span>${s}
-  </span>`;
-}
-
-function renderIssueRow(issue, idx) {
-  const tc  = TYPE[issue.type] || TYPE['Story'];
-  const pc  = PRI[issue.priority] || '#829DCE';
-  const alt = idx % 2 === 1 ? ' alt' : '';
-  return `<div class="issue-row${alt}">
-    <span class="issue-type-icon" title="${issue.type}" style="background:${tc.color}22;color:${tc.color}">${tc.sym}</span>
-    <a class="issue-key" href="${JIRA}${issue.key}" target="_blank" rel="noopener">${issue.key}</a>
-    <div>
-      <div class="issue-summary">${issue.summary}</div>
-      ${issue.parentStory ? `<div class="issue-parent">↳ ${issue.parentStory}</div>` : ''}
-    </div>
-    ${statusBadge(issue.status)}
-    <div class="priority-cell">
-      <span class="priority-dot" style="background:${pc}"></span>
-      <span style="color:${pc}">${issue.priority}</span>
-    </div>
-    <div class="assignee-cell" style="color:${issue.assignee ? 'var(--text3)' : 'var(--dim)'};font-style:${issue.assignee ? 'normal':'italic'}">
-      ${issue.assignee||'Unassigned'}
-    </div>
-    <div class="est-cell">${issue.est != null ? issue.est+'h' : '—'}</div>
-  </div>`;
-}
-
-function renderGroups() {
-  const filtered = getFiltered();
-  const grouped  = {};
-  filtered.forEach(i => { (grouped[i.group] = grouped[i.group]||[]).push(i); });
-  document.getElementById('filterCount').textContent = filtered.length + ' of ' + ISSUES.length + ' issues';
-
-  const container = document.getElementById('groupsContainer');
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="no-results">No issues match your filters.</div>';
-    return;
-  }
-
-  container.innerHTML = EPIC_ORDER.filter(e => grouped[e]).map(epicName => {
-    const issues = grouped[epicName];
-    const done   = issues.filter(i => isDone(i.status)).length;
-    const pct    = issues.length ? Math.round(done / issues.length * 100) : 0;
-    const open   = expanded[epicName] !== false;
-    const barColor = pct === 100 ? '#41D48C' : '#207DE9';
-
-    return `<div class="epic-group">
-      <div class="epic-header${open ? '' : ' collapsed'}" onclick="toggleGroup('${epicName.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">
-        <span class="epic-chevron${open ? ' open' : ''}">▶</span>
-        <span class="epic-name">${epicName}</span>
-        <div class="epic-progress-wrap">
-          <div class="epic-mini-bar">
-            <div class="epic-mini-fill" style="width:${pct}%;background:${barColor}"></div>
-          </div>
-          <span class="epic-count" style="color:${pct===100?'#41D48C':'var(--muted)'}">${done}/${issues.length}</span>
-        </div>
-      </div>
-      ${open ? `<div class="issue-table">
-        <div class="col-headers">
-          <span></span><span>Key</span><span>Summary</span><span>Status</span><span>Priority</span><span>Assignee</span><span>Est.</span>
-        </div>
-        ${issues.map((issue, idx) => renderIssueRow(issue, idx)).join('')}
-      </div>` : ''}
-    </div>`;
-  }).join('');
-}
-
-function toggleGroup(name) {
-  expanded[name] = !(expanded[name] !== false);
-  renderGroups();
-}
-
-document.getElementById('searchInput').addEventListener('input', renderGroups);
-document.getElementById('statusFilter').addEventListener('change', renderGroups);
-document.getElementById('assigneeFilter').addEventListener('change', renderGroups);
-
-renderGroups();
-</script>
-</body>
-</html>
