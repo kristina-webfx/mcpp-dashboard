@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCPP · March 2026 Roadmap Dashboard</title>
+<title>MCPP · April 2026 Roadmap Dashboard</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -16,24 +16,6 @@
   .header-badge{background:rgba(32,125,233,0.12);border:1px solid rgba(32,125,233,0.25);border-radius:9999px;padding:4px 14px;font-size:11px;color:var(--blue2);font-weight:700;white-space:nowrap}
   .last-updated{font-size:10px;color:var(--dim);margin-top:2px}
   .main{padding:20px 28px 0;max-width:1400px}
-  .priorities-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:16px}
-  .priorities-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-  .priorities-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px}
-  .priorities-list{display:flex;flex-direction:column;gap:8px}
-  .priority-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg3);border-radius:8px;border:1px solid var(--border2)}
-  .priority-item.overdue{border-color:rgba(240,77,80,0.4);background:rgba(240,77,80,0.05)}
-  .priority-item.done{border-color:rgba(65,212,140,0.3);background:rgba(65,212,140,0.04)}
-  .priority-item.inprogress{border-color:rgba(32,125,233,0.3);background:rgba(32,125,233,0.04)}
-  .priority-rank{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;color:var(--dim);min-width:18px}
-  .priority-item.done .priority-rank{color:#41D48C}
-  .priority-item.inprogress .priority-rank{color:var(--blue2)}
-  .priority-name{flex:1;font-size:13px;font-weight:600;color:var(--text2)}
-  .priority-item.done .priority-name{color:var(--text3);text-decoration:line-through;text-decoration-color:rgba(65,212,140,0.5)}
-  .priority-due{font-size:11px;font-weight:600;padding:2px 10px;border-radius:9999px;white-space:nowrap}
-  .priority-due.overdue{background:rgba(240,77,80,0.15);color:#F04D50;border:1px solid rgba(240,77,80,0.3)}
-  .priority-due.upcoming{background:rgba(255,209,45,0.1);color:var(--yellow);border:1px solid rgba(255,209,45,0.25)}
-  .priority-due.done{background:rgba(65,212,140,0.12);color:#41D48C;border:1px solid rgba(65,212,140,0.3)}
-  .priority-due.inprogress{background:rgba(32,125,233,0.12);color:var(--blue2);border:1px solid rgba(32,125,233,0.3)}
   .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:16px}
   .kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;transition:border-color 0.2s}.kpi-card:hover{border-color:var(--blue)}
   .kpi-val{font-size:22px;font-weight:800;line-height:1;margin-bottom:5px}.kpi-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px}
@@ -71,7 +53,6 @@
   .no-results{text-align:center;padding:48px;color:var(--dim);font-size:14px}
   @media(max-width:1000px){.col-headers,.issue-row{grid-template-columns:20px 82px 1fr 128px 128px 48px}.col-headers span:nth-child(5),.issue-row>*:nth-child(5){display:none}}
   @media(max-width:700px){.col-headers,.issue-row{grid-template-columns:20px 72px 1fr 100px}.col-headers span:nth-child(n+5){display:none}}
-  @media(max-width:560px){.priority-item{flex-wrap:wrap;gap:6px}}
 </style></head>
 <body>
 <header class="header">
@@ -80,47 +61,13 @@
     <div class="header-divider"></div>
     <div>
       <div class="header-title-sub">MCPP · PR Panthers RevenueCloudFX</div>
-      <div class="header-title-main">March 2026 Roadmap Dashboard</div>
+      <div class="header-title-main">April 2026 Roadmap Dashboard</div>
       <div class="last-updated" id="lastUpdated"></div>
     </div>
   </div>
-  <div class="header-badge">March 2026 · Jira</div>
+  <div class="header-badge">April 2026 · Jira</div>
 </header>
 <div class="main">
-  
-  <div class="priorities-card">
-    <div class="priorities-header">
-      <span class="priorities-title">&#127919; Current Priorities</span>
-    </div>
-    <div class="priorities-list">
-      <div class="priority-item done">
-        <span class="priority-rank">1</span>
-        <span class="priority-name">ReviewAccelerationFX SMS</span>
-        <span class="priority-due done">&#10003; Done</span>
-      </div>
-      <div class="priority-item done">
-        <span class="priority-rank">2</span>
-        <span class="priority-name">AdTechFX Lite</span>
-        <span class="priority-due done">&#10003; Done</span>
-      </div>
-      <div class="priority-item done">
-        <span class="priority-rank">3</span>
-        <span class="priority-name">Automated Conversion Feeds in C360FX Timelines</span>
-        <span class="priority-due done">&#10003; Done</span>
-      </div>
-      <div class="priority-item done">
-        <span class="priority-rank">4</span>
-        <span class="priority-name">AdTechFX Data Storytelling</span>
-        <span class="priority-due done">&#10003; Done</span>
-      </div>
-      <div class="priority-item inprogress">
-        <span class="priority-rank">5</span>
-        <span class="priority-name">LocalFX Beta Updates</span>
-        <span class="priority-due inprogress">Under Review</span>
-      </div>
-    </div>
-  </div>
-
   <div class="kpi-grid" id="kpiGrid"></div>
   <div class="progress-card">
     <div class="progress-header"><span class="progress-label">Overall Progress</span><span class="progress-pct" id="progressPct">0%</span></div>
@@ -139,109 +86,63 @@
 </div>
 <script>
 const ISSUES=[
-  { key:"MCPP-8508", summary:"Send SMS & Email notifications for leads created via Integrations & Nutshell Webhooks", type:"Story", status:"Done", priority:"Low", assignee:null, group:"Advanced Notification Preferences", parentStory:null, est:null },
-  { key:"MCPP-8201", summary:"Re-activate Automated Conversion Feeds for Healthcare Industry", type:"Task", status:"Done", priority:"Low", assignee:"Daniel Stebbins", group:"Automated Conversion Feeds: Phase 2", parentStory:null, est:7.0 },
-  { key:"MCPP-8042", summary:"[Beta Edit] Audit - update polling logic up to 30mins", type:"Task", status:"Done", priority:"Low", assignee:"Jonn Eric Quintos", group:"LocalFX: Map Grid Ranker", parentStory:null, est:3.0 },
-  { key:"MCPP-9064", summary:"Missing default SMS content", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:0.5 },
-  { key:"MCPP-9063", summary:"Ensure OBS plans have correct # of SMS/Month", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:0.5 },
-  { key:"MCPP-9062", summary:"FE: Connect FE with new API for determining SMS Credit usage", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:2.0 },
-  { key:"MCPP-9052", summary:"BE: Enforce extra credit limits for long SMS", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:4.0 },
-  { key:"MCPP-9051", summary:"FE: Update Locations page to use an id instead of index", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:1.5 },
-  { key:"MCPP-9026", summary:"BE Tech Plan", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:1.0 },
-  { key:"MCPP-9019", summary:"[ProspectorFX] Selected ICP does not appear in the ICP Preset field after selection.", type:"Bug", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"ProspectorFX [Phase 2]", parentStory:null, est:1.0 },
-  { key:"MCPP-8995", summary:"[BE] Support multiple phone numbers in the SMS Preview", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:1.0 },
-  { key:"MCPP-8948", summary:"[FE] Remove Paid Social/Pro+ language from AdTechFX landing page", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jenivee Mariquit", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:0.5 },
-  { key:"MCPP-8941", summary:"[FE] Create UnlockAdTechFooter component", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:2.0 },
-  { key:"MCPP-8938", summary:"[FE] Update PPCBenefitsList component", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:2.0 },
-  { key:"MCPP-8937", summary:"[FE] Update BenefitsList component", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:2.0 },
-  { key:"MCPP-8936", summary:"[FE] Split current UnlockAdTech component into smaller/easier to manage components", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:3.0 },
-  { key:"MCPP-8934", summary:"[PM] Update docs to point users to AnalyticsFX for results & AdTechFX for individual campaign details", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Kristina Pollard", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:null },
-  { key:"MCPP-8933", summary:"[FE] Link to AdTechFX UI from the AdTechFX Results report in AnalyticsFX", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Kristina Pollard", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:1.0 },
-  { key:"MCPP-8926", summary:"[BE] Generate industry-level stats", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:8.0 },
-  { key:"MCPP-8923", summary:"Cleanup 30D restrictions", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"LocalFX: Map Grid Ranker", parentStory:"[Beta Edit] Pre-generate Local SEO Audit for all active sites", est:3.0 },
-  { key:"MCPP-8922", summary:"Create a new CF to listen to new/reactivated sites", type:"Sub-task", status:"Needs Edits", priority:"Medium", assignee:"Connor Clifford", group:"LocalFX: Map Grid Ranker", parentStory:"[Beta Edit] Pre-generate Local SEO Audit for all active sites", est:4.0 },
-  { key:"MCPP-8921", summary:"Create Backfill CLI script to trigger all active sites", type:"Sub-task", status:"Blocked", priority:"Medium", assignee:"Jonn Eric Quintos", group:"LocalFX: Map Grid Ranker", parentStory:"[Beta Edit] Pre-generate Local SEO Audit for all active sites", est:3.0 },
-  { key:"MCPP-8920", summary:"Create Seed CF and Queue", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"LocalFX: Map Grid Ranker", parentStory:"[Beta Edit] Pre-generate Local SEO Audit for all active sites", est:8.0 },
-  { key:"MCPP-8918", summary:"[FE] Add \"Watch Company\" to the results table", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:2.5 },
-  { key:"MCPP-8917", summary:"[FE] ABM Campaigns updates ", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:6.0 },
-  { key:"MCPP-8916", summary:"[FE] Remove \"MediaMath\" from the graphic in the current banner ", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:1.0 },
-  { key:"MCPP-8915", summary:"[FE] Create text/number stats component to replace current graphs", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:5.0 },
-  { key:"MCPP-8914", summary:"[FE] Add \"How to read this\" callouts ", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:2.5 },
-  { key:"MCPP-8912", summary:"[FE] Updates to the \"Latest Creatives\" section ", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:3.0 },
-  { key:"MCPP-8911", summary:"[FE] Add title/subtitle/description for the stats sections", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:1.0 },
-  { key:"MCPP-8910", summary:"[FE] Update design for collapsible banners", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:4.0 },
-  { key:"MCPP-8909", summary:"[FE] Add \"Common Results\" component to ABM, AI Lookalike and CRM landing pages", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:2.0 },
-  { key:"MCPP-8908", summary:"Add scheduledFor and sentAt timestamps to SMS table and API", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:2.0 },
-  { key:"MCPP-8907", summary:"[FE] Create \"Common Results\" component and add to ABR", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:3.0 },
-  { key:"MCPP-8906", summary:"[FE] AdTechFX Landing Page updates", type:"Sub-task", status:"Done", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:4.0 },
-  { key:"MCPP-8903", summary:"Request for Deletion of a KOA Contact", type:"Bug", status:"Needs Edits", priority:"Medium", assignee:"Jonn Eric Quintos", group:"Contact Deletion Requests", parentStory:null, est:0.5 },
-  { key:"MCPP-8894", summary:"[BE] Update conversion upload pipeline", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Daniel Stebbins", group:"Automated Conversion Feeds: Phase 2", parentStory:"Show \"Sent to Google Ads\" events on C360FX Customer Journey Timelines", est:5.0 },
-  { key:"MCPP-8893", summary:"[BE] Update identity-activity-contact-v2", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"Automated Conversion Feeds: Phase 2", parentStory:"Show \"Sent to Google Ads\" events on C360FX Customer Journey Timelines", est:4.0 },
-  { key:"MCPP-8892", summary:"[BE] Update Google Ads conversion action API", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"Automated Conversion Feeds: Phase 2", parentStory:"Show \"Sent to Google Ads\" events on C360FX Customer Journey Timelines", est:2.0 },
-  { key:"MCPP-8891", summary:"[BE] Update Spanner Tables", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Jonn Eric Quintos", group:"Automated Conversion Feeds: Phase 2", parentStory:"Show \"Sent to Google Ads\" events on C360FX Customer Journey Timelines", est:1.0 },
-  { key:"MCPP-8880", summary:"Allow AdTechFX Lite clients to request campaigns", type:"Story", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"AdTechFX Lite", parentStory:null, est:3.0 },
-  { key:"MCPP-8847", summary:"Upgrade our QR code generator", type:"Story", status:"Done", priority:"Medium", assignee:"Jenivee Mariquit", group:"AdTechFX Lite", parentStory:null, est:0.5 },
-  { key:"MCPP-8824", summary:"Update \"Unlock AdTechFX\" page", type:"Story", status:"Done", priority:"Medium", assignee:null, group:"AdTechFX Lite", parentStory:null, est:null },
-  { key:"MCPP-8710", summary:"Add tokens API stoplight docs", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"Security Enhancements", parentStory:"Hide API Tokens in Global Permissions from Other FXers", est:1.0 },
-  { key:"MCPP-8543", summary:"[RAFX] Upload validation error persists after correction and prevents contacts from uploading (Dromo)", type:"Sub-task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Use Dromo as the uploader for RAFX email/SMS lists", est:2.0 },
-  { key:"MCPP-8527", summary:"Managed Locations - Add option to Disable BrightLocal Sync", type:"Task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"LocalFX: Map Grid Ranker", parentStory:null, est:5.0 },
-  { key:"MCPP-8517", summary:"AdTechFX Data Storytelling UI Wins", type:"Story", status:"Done", priority:"Medium", assignee:null, group:"Data Storytelling", parentStory:null, est:null },
-  { key:"MCPP-8345", summary:"Show \"Sent to Google Ads\" events on C360FX Customer Journey Timelines", type:"Story", status:"Done", priority:"Medium", assignee:null, group:"Automated Conversion Feeds: Phase 2", parentStory:null, est:null },
-  { key:"MCPP-8277", summary:"[Beta Edit] Pre-generate Local SEO Audit for all active sites", type:"Story", status:"Under Review", priority:"Medium", assignee:null, group:"LocalFX: Map Grid Ranker", parentStory:null, est:null },
-  { key:"MCPP-8178", summary:"[Beta request] Clients on LocalFX plans who click \"improve\" CTA should be assigned to their Local AM", type:"Task", status:"Done", priority:"Medium", assignee:"Connor Clifford", group:"LocalFX: Map Grid Ranker", parentStory:null, est:3.0 },
-  { key:"MCPP-9113", summary:"[Beta Update] ReviewAccelerationFX: SMS Preview should enter phone number when you click outside field", type:"Task", status:"Done", priority:"High", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:null, est:1.0 },
-  { key:"MCPP-9112", summary:"[FE] Update Funnels component in AdTech (CRM, ABR, ABM, AI Lookalike)", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:3.0 },
-  { key:"MCPP-9100", summary:"[FE] Add \"View Business Impact Reporting Button\"", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"Data Storytelling", parentStory:"AdTechFX Data Storytelling UI Wins", est:1.0 },
-  { key:"MCPP-9073", summary:"Update OST button & Functionality", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:4.0 },
-  { key:"MCPP-9054", summary:"[AdTech] Use a more reliable source to get clientCompany names when creating Adtech todo's", type:"Task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"(No Epic)", parentStory:null, est:3.0 },
-  { key:"MCPP-9048", summary:"BE: Locations should use and save an `id`", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:2.0 },
-  { key:"MCPP-9043", summary:"BE: SMS table should save `location` from Dromo and use on sms-send", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:4.0 },
-  { key:"MCPP-9042", summary:"FE: Implement recent dromo uploads", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:2.0 },
-  { key:"MCPP-9040", summary:"BE: Dromo filenames in reviewacceleration-import-jobs", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:4.0 },
-  { key:"MCPP-9038", summary:"FE: SMS Options should use the new API", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:2.0 },
-  { key:"MCPP-9025", summary:"FE Tech Plan", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:1.0 },
-  { key:"MCPP-9024", summary:"SMS Credit/Character Limit updates", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:3.0 },
-  { key:"MCPP-9023", summary:"Location + Platform Link updates", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:4.0 },
-  { key:"MCPP-9022", summary:"Dromo-related updates", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"PM Edits before Beta Testing", parentStory:"PM Edits before Beta Testing", est:3.0 },
-  { key:"MCPP-9021", summary:"PM Edits before Beta Testing", type:"Task", status:"Done", priority:"High", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
-  { key:"MCPP-8994", summary:"[FE] PM Updates for SMS", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:3.0 },
-  { key:"MCPP-8940", summary:"[FE] Upgrade PlansComparison component (Table)", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:3.0 },
-  { key:"MCPP-8939", summary:"[FE] Create UpgradeModal component", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"AdTechFX Lite", parentStory:"Update \"Unlock AdTechFX\" page", est:2.0 },
-  { key:"MCPP-8931", summary:"BE - Add consent to smsOptions and update job checks", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:3.0 },
-  { key:"MCPP-8930", summary:"Create SMS Status Check", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:3.0 },
-  { key:"MCPP-8902", summary:"Create Send SMS webhook", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:4.0 },
-  { key:"MCPP-8890", summary:"[FE] Add new timeline entries and filter", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"Automated Conversion Feeds: Phase 2", parentStory:"Show \"Sent to Google Ads\" events on C360FX Customer Journey Timelines", est:4.0 },
-  { key:"MCPP-8879", summary:"Dig into QR code generator to plan for MCPP-8847", type:"Spike", status:"Done", priority:"High", assignee:"jose", group:"AdTechFX Lite", parentStory:null, est:2.0 },
-  { key:"MCPP-8817", summary:"Billing Plans & Add-ons updates for AdTechFX Lite", type:"Story", status:"Done", priority:"High", assignee:"Connor Clifford", group:"AdTechFX Lite", parentStory:null, est:2.0 },
-  { key:"MCPP-8798", summary:"Ensure SMS can launch while legacy email campaigns are still available", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:3.0 },
-  { key:"MCPP-8474", summary:"Create SMS Delivery -remove/invalidate service", type:"Sub-task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:3.0 },
-  { key:"MCPP-8473", summary:"FE: Show forms for the site and integrate with `alert.setting`", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"Advanced Notification Preferences", parentStory:"Form Selector for LMFX Notifications", est:4.0 },
-  { key:"MCPP-8472", summary:"Implementation", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"Advanced Notification Preferences", parentStory:"Form Selector for LMFX Notifications", est:9.0 },
-  { key:"MCPP-8259", summary:"Create Send SMS (direct) function", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:2.0 },
-  { key:"MCPP-8258", summary:"Create Send SMS Enqueue multi-service", type:"Sub-task", status:"Done", priority:"High", assignee:"Daniel Stebbins", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:8.0 },
-  { key:"MCPP-8250", summary:"Send SMS Functionality", type:"Story", status:"Done", priority:"High", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
-  { key:"MCPP-8249", summary:"BE - Add API to handle sends from FE", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
-  { key:"MCPP-8248", summary:"Verify Twilio's Messaging Service is setup correctly", type:"Sub-task", status:"Done", priority:"High", assignee:"Jonn Eric Quintos", group:"ReviewAccelerationFX Revamp", parentStory:"Send SMS Functionality", est:1.0 },
-  { key:"MCPP-8232", summary:"Ensure that EnvRad only sees Legacy", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:2.0 },
-  { key:"MCPP-8210", summary:"DataIQ alert for SendGrid IP address", type:"Task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"Fully Deprecate Password Login", parentStory:null, est:3.0 },
-  { key:"MCPP-8196", summary:"[FE] - Update SMS Options submit logic", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Allow review solicitation via SMS Campaigns", est:2.0 },
-  { key:"MCPP-8126", summary:"[FE] - Create hooks to communicate with BE APIs and add submit logic", type:"Sub-task", status:"Done", priority:"High", assignee:"Connor Clifford", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
-  { key:"MCPP-8125", summary:"[FE] - Add Preview SMS section to Send SMS form (Preview and custom message components)", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:6.0 },
-  { key:"MCPP-8124", summary:"[FE] - Add Preview SMS section to Send SMS form (Recipients and Location)", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:4.0 },
-  { key:"MCPP-8122", summary:"[FE] - Add SMS Consent Collection section to Send SMS form", type:"Sub-task", status:"Done", priority:"High", assignee:"jose", group:"ReviewAccelerationFX Revamp", parentStory:"Send Surveys: Build Send SMS tab", est:2.0 },
-  { key:"MCPP-7592", summary:"Send Surveys: Build Send SMS tab", type:"Story", status:"Done", priority:"High", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
-  { key:"MCPP-433", summary:"Form Selector for LMFX Notifications", type:"Story", status:"Done", priority:"High", assignee:null, group:"Advanced Notification Preferences", parentStory:null, est:null },
-  { key:"MCPP-7555", summary:"Send Surveys: Allow review solicitation via SMS Campaigns", type:"Story", status:"Done", priority:"Highest", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
+  { key:"MCPP-9020", summary:"[FXer: Gina Bennett (gbennett@webfx.com)] Pause/Stop Automated RCFX Conversion Feed", type:"Task", status:"Under Review", priority:"Low", assignee:"Jonn Eric Quintos", group:"Automate Basic Conversion Feeds", parentStory:null, est:5.0 },
+  { key:"MCPP-9130", summary:"BE: Backfill reviews", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:4.0 },
+  { key:"MCPP-9129", summary:"BE: Create callback function to upsert reviews from BL", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:4.0 },
+  { key:"MCPP-9128", summary:"BE: Trigger daily job to fetch reviews from BL ", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:8.0 },
+  { key:"MCPP-9127", summary:"BE: Update our `/sms` API for any additional aggregation endpoints needed", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:4.0 },
+  { key:"MCPP-9126", summary:"BE: Create Spanner `reviews` table and API", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:6.0 },
+  { key:"MCPP-9111", summary:"[Discovery task] Confirm if reviews can pull into ReviewAccelerationFX from redirected URL", type:"Spike", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:2.0 },
+  { key:"MCPP-9104", summary:"Do not send monthly digest emails in the first month client received a lead", type:"Story", status:"Backlog", priority:"Medium", assignee:null, group:"Advanced Notification Preferences", parentStory:null, est:4.0 },
+  { key:"MCPP-9099", summary:"[BE] Check contact stats attribution", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"Give deals EmailMarketingFX Attribution based on email opens", est:1.0 },
+  { key:"MCPP-9098", summary:"BE: get queue length info", type:"Sub-task", status:"To Do", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"SMS Queue Popup", est:4.0 },
+  { key:"MCPP-9095", summary:"[BE] Backfill", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"Give deals EmailMarketingFX Attribution based on email opens", est:3.0 },
+  { key:"MCPP-9094", summary:"[BE] Impressions attribution update", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"Give deals EmailMarketingFX Attribution based on email opens", est:5.0 },
+  { key:"MCPP-9093", summary:"[BE] Check deals attribution, update revops-deal-inherit-v2 if needed", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"Give deals EmailMarketingFX Attribution based on email opens", est:4.0 },
+  { key:"MCPP-9092", summary:"[FE] Make sure the multi-touch journey report has the email channel logo", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"Give deals EmailMarketingFX Attribution based on email opens", est:1.0 },
+  { key:"MCPP-9086", summary:"FE: Create All Reviews Table", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:3.0 },
+  { key:"MCPP-9085", summary:"FE: Create Rating by location Table ", type:"Sub-task", status:"Blocked", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:2.0 },
+  { key:"MCPP-9084", summary:"FE: Create Rating by source Table.", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:3.0 },
+  { key:"MCPP-9083", summary:"FE: Create/Add Time to complete queue modal", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:3.0 },
+  { key:"MCPP-9082", summary:"FE: Create/Add SMS Credits modal ", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:2.0 },
+  { key:"MCPP-9081", summary:"FE: Create and implement StatsCard shared component ", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:3.0 },
+  { key:"MCPP-9080", summary:"FE: Move current Results page to new NPS data tab", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Results page MVP V2 of ReviewAccelerationFX", est:1.0 },
+  { key:"MCPP-9077", summary:"FE - Enrichment History Report", type:"Sub-task", status:"To Do", priority:"Medium", assignee:"Kristina Pollard", group:"Data Storytelling", parentStory:"ProspectorFX Data Storytelling UI Wins", est:2.0 },
+  { key:"MCPP-9076", summary:"FE - ProspectorFX: Company Search", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"Data Storytelling", parentStory:"ProspectorFX Data Storytelling UI Wins", est:1.0 },
+  { key:"MCPP-9075", summary:"FE - ProspectorFX: Contact Search", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"Data Storytelling", parentStory:"ProspectorFX Data Storytelling UI Wins", est:3.0 },
+  { key:"MCPP-8888", summary:"Give deals EmailMarketingFX Attribution based on email opens", type:"Story", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:null, est:null },
+  { key:"MCPP-8869", summary:"PersonalizeFX Data Storytelling UI Wins", type:"Story", status:"Backlog", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:null, est:1.5 },
+  { key:"MCPP-8857", summary:"ProspectorFX Data Storytelling UI Wins", type:"Story", status:"Backlog", priority:"Medium", assignee:"jose", group:"Data Storytelling", parentStory:null, est:null },
+  { key:"MCPP-8852", summary:"Notifications Data Storytelling UI Wins", type:"Story", status:"Backlog", priority:"Medium", assignee:null, group:"Data Storytelling", parentStory:null, est:2.0 },
+  { key:"MCPP-8532", summary:"Automated Conversion Feed Contact Data for Looker Report", type:"Task", status:"To Do", priority:"Medium", assignee:"Daniel Stebbins", group:"Automated Conversion Feeds: Phase 2", parentStory:null, est:3.0 },
+  { key:"MCPP-8422", summary:"Results page MVP V2 of ReviewAccelerationFX", type:"Story", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
+  { key:"MCPP-8268", summary:"SMS Queue Popup", type:"Story", status:"To Do", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:3.0 },
+  { key:"MCPP-8032", summary:"[BE] Contact deduping (drop first from MVP)", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Customer360FX Integration: Send surveys automatically", est:6.0 },
+  { key:"MCPP-8031", summary:"[BE] CFs to queue surveys", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Customer360FX Integration: Send surveys automatically", est:8.0 },
+  { key:"MCPP-8030", summary:"[BE] Audience automations table + API", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:"Customer360FX Integration: Send surveys automatically", est:6.0 },
+  { key:"MCPP-6148", summary:"2. Create nutshell/event/* APIs", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", est:12.0 },
+  { key:"MCPP-5426", summary:"4. Update the identity/contact-activity API", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", est:1.0 },
+  { key:"MCPP-5425", summary:"3. Update the identity-activity-contact-v2 CF", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:"Daniel Stebbins", group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", est:8.0 },
+  { key:"MCPP-5424", summary:"1. Update the nutshell-lead-webhook CF", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", est:2.0 },
+  { key:"MCPP-980", summary:"5. FE: Display events in the C360 Contact Timeline UI & add filters", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:"jose", group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", est:6.0 },
+  { key:"MCPP-852", summary:"Dev documentation", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:"Daniel Stebbins", group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", est:2.0 },
+  { key:"MCPP-849", summary:"Implement API tests", type:"Sub-task", status:"Backlog", priority:"Medium", assignee:"Jenivee Mariquit", group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", est:3.0 },
+  { key:"MCPP-778", summary:"EmailMarketingFX: Nutshell Campaigns events in c360 timeline", type:"Story", status:"Backlog", priority:"Medium", assignee:null, group:"EmailMarketingFX Attribution & C360FX Integration", parentStory:null, est:null },
+  { key:"MCPP-9055", summary:"Add-ons for ReviewAccelerationFX Locations", type:"Story", status:"To Do", priority:"High", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:3.0 },
+  { key:"MCPP-6976", summary:"[Work with Nutshell] Update CallTrackerFX Config to Allow Inbound SMS to Send to Inbox", type:"Story", status:"Technical Plan", priority:"High", assignee:"Justin Karli", group:"Text Messages in CallTracker", parentStory:null, est:null },
+  { key:"MCPP-3931", summary:"Ingest Nutshell form submission webhooks", type:"Task", status:"Backlog", priority:"High", assignee:null, group:"Nutshell Forms in MCFX", parentStory:null, est:12.0 },
+  { key:"MCPP-7561", summary:"Customer360FX Integration: Send surveys automatically", type:"Story", status:"Backlog", priority:"Highest", assignee:null, group:"ReviewAccelerationFX Revamp", parentStory:null, est:null },
+  { key:"MCPP-6680", summary:"Add LinkedIn Organic to Brand Impressions Report", type:"Story", status:"Backlog", priority:"Highest", assignee:null, group:"Brand Impressions Report", parentStory:null, est:5.0 },
 ];
 const JIRA='https://webfx.atlassian.net/browse/';
 const NOW=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit'});
-const STATUS_CFG={'Done':{color:'#41D48C',bg:'rgba(65,212,140,0.12)'},'Merged':{color:'#4DC1B9',bg:'rgba(77,193,185,0.12)'},'In Progress':{color:'#207DE9',bg:'rgba(32,125,233,0.15)'},'Under Review':{color:'#FFD12D',bg:'rgba(255,209,45,0.12)'},'Needs Edits':{color:'#F7941D',bg:'rgba(247,148,29,0.12)'},'Needs Specs':{color:'#F7941D',bg:'rgba(247,148,29,0.12)'},'Blocked':{color:'#F04D50',bg:'rgba(240,77,80,0.12)'},'To Do':{color:'#829DCE',bg:'rgba(130,157,206,0.10)'},'Backlog':{color:'#4C74B9',bg:'rgba(76,116,185,0.10)'},'Declined':{color:'#F04D50',bg:'rgba(240,77,80,0.12)'}};
+const STATUS_CFG={'Done':{color:'#41D48C',bg:'rgba(65,212,140,0.12)'},'Merged':{color:'#4DC1B9',bg:'rgba(77,193,185,0.12)'},'In Progress':{color:'#207DE9',bg:'rgba(32,125,233,0.15)'},'Under Review':{color:'#FFD12D',bg:'rgba(255,209,45,0.12)'},'Needs Edits':{color:'#F7941D',bg:'rgba(247,148,29,0.12)'},'Needs Specs':{color:'#F7941D',bg:'rgba(247,148,29,0.12)'},'Blocked':{color:'#F04D50',bg:'rgba(240,77,80,0.12)'},'Technical Plan':{color:'#9B59B6',bg:'rgba(155,89,182,0.12)'},'To Do':{color:'#829DCE',bg:'rgba(130,157,206,0.10)'},'Backlog':{color:'#4C74B9',bg:'rgba(76,116,185,0.10)'},'Declined':{color:'#F04D50',bg:'rgba(240,77,80,0.12)'}};
 const PRI_COLOR={Highest:'#F04D50',High:'#F7941D',Medium:'#FFD12D',Low:'#84B9F5',Lowest:'#6E7B81'};
 const PRI_ORDER=['Highest','High','Medium','Low','Lowest'];
 const TYPE_CFG={'Story':{sym:'S',color:'#207DE9'},'Sub-task':{sym:'\u21b3',color:'#4C74B9'},'Bug':{sym:'B',color:'#F04D50'},'Task':{sym:'T',color:'#9B59B6'},'Spike':{sym:'\u26a1',color:'#F7941D'}};
 const EPIC_ORDER=[...new Set(ISSUES.map(i=>i.group))];
 const isDone=s=>['Done','Merged','Declined'].includes(s);
-const isFlight=s=>['In Progress','Under Review','Needs Edits','Needs Specs'].includes(s);
+const isFlight=s=>['In Progress','Under Review','Needs Edits','Needs Specs','Technical Plan'].includes(s);
 let hideDone=false;const expanded={};EPIC_ORDER.forEach(e=>expanded[e]=true);
 document.getElementById('lastUpdated').textContent='Last refreshed '+NOW;
 const totDone=ISSUES.filter(i=>isDone(i.status)).length,totFlight=ISSUES.filter(i=>isFlight(i.status)).length,totEst=ISSUES.reduce((s,i)=>s+(i.est||0),0),totUn=ISSUES.filter(i=>!i.assignee).length;
