@@ -80,6 +80,10 @@ def fetch_jira_issues():
     start_at = 0
     max_results = 100
 
+    # Debug: print auth info (masked) and JQL
+    print(f"  JQL: {JQL}")
+    print(f"  Auth email set: {bool(JIRA_EMAIL)}, token set: {bool(JIRA_API_TOKEN)}")
+
     while True:
         url = f"{JIRA_BASE_URL}/rest/api/3/search/jql"
         params = {
@@ -89,15 +93,18 @@ def fetch_jira_issues():
             "maxResults": max_results,
         }
         resp = requests.get(url, headers=HEADERS, params=params)
+        print(f"  HTTP {resp.status_code}")
         if not resp.ok:
-            print(f"Jira error {resp.status_code}: {resp.text}")
+            print(f"  Jira error: {resp.text}")
         resp.raise_for_status()
         data = resp.json()
+        print(f"  Response keys: {list(data.keys())}")
+        print(f"  Raw response preview: {str(data)[:500]}")
 
         batch = data.get("issues", [])
         issues.extend(batch)
 
-        print(f"  Page fetched: {len(batch)} issues, keys={list(data.keys())}")
+        print(f"  Page fetched: {len(batch)} issues")
         if data.get("isLast", True) or len(batch) < max_results:
             break
         start_at += max_results
