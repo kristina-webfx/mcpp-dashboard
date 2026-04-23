@@ -3,9 +3,11 @@ name: Refresh MCPP Dashboard
 on:
   schedule:
     # 8 AM ET = 12:00 UTC (EST) / 13:00 UTC (EDT)
-    # Using 12:00 UTC to reliably hit 8 AM ET year-round (EST winter)
     - cron: '0 12 * * *'
   workflow_dispatch: # Allow manual trigger from GitHub Actions tab
+
+permissions:
+  contents: write
 
 jobs:
   refresh:
@@ -14,8 +16,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
-        with:
-          token: ${{ secrets.GH_PAT }}
 
       - name: Set up Python
         uses: actions/setup-python@v6
