@@ -82,13 +82,13 @@ def fetch_jira_issues():
 
     while True:
         url = f"{JIRA_BASE_URL}/rest/api/3/search/jql"
-        payload = {
+        params = {
             "jql": JQL,
-            "fields": FIELDS.split(","),
+            "fields": FIELDS,
             "startAt": start_at,
             "maxResults": max_results,
         }
-        resp = requests.post(url, headers={**HEADERS, "Content-Type": "application/json"}, json=payload)
+        resp = requests.get(url, headers=HEADERS, params=params)
         if not resp.ok:
             print(f"Jira error {resp.status_code}: {resp.text}")
         resp.raise_for_status()
