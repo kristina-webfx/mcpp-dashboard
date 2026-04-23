@@ -224,50 +224,42 @@ def build_priorities_html():
 
 
 def build_epics_html(epics, jira_base):
-    sections = ""
-    for epic in epics:
-        issues_html = ""
-        for i in epic["issues"]:
-            sc = status_color(i["status"])
-            pc = priority_color(i["priority"])
-            est = f'<span class="est">{i["original_estimate_hrs"]}h</span>' if i["original_estimate_hrs"] else ""
-            assignee = i["assignee"] if i["assignee"] != "Unassigned" else '<span class="unassigned">Unassigned</span>'
-            issues_html += f"""
-            <div class="issue-row">
-              <a class="issue-key" href="{jira_base}/browse/{i['key']}" target="_blank">{i['key']}</a>
-              <div class="issue-summary">{i['summary']}</div>
-              <div class="issue-meta">
-                <span class="badge" style="background:{sc}20;color:{sc};border:1px solid {sc}40">{i['status']}</span>
-                <span class="badge priority-badge-sm" style="background:{pc}20;color:{pc};border:1px solid {pc}40">{i['priority']}</span>
-                <span class="assignee">{assignee}</span>
-                {est}
-              </div>
-            </div>"""
-
-        epic_link = f'<a href="{jira_base}/browse/{epic["key"]}" target="_blank" class="epic-key">{epic["key"]}</a>' if epic.get("key") else ""
-        sections += f"""
-        <div class="epic-card">
-          <div class="epic-header">
-            <div class="epic-title">{epic["name"]}</div>
-            {epic_link}
-          </div>
-          <div class="epic-issues">{issues_html}</div>
-        </div>"""
-    return sections
+    # Kept for compatibility but rendering is now done in JS
+    return ""
 
 
 def generate_html(issues, epics, stats, generated_at):
+    import json as _json
     jira_base = JIRA_BASE_URL
     priorities_html = build_priorities_html()
-    epics_html = build_epics_html(epics, jira_base)
     pct = stats["pct"]
+
+    # Serialize epics data for JS
+    epics_json = _json.dumps([
+        {
+            "name": e["name"],
+            "key": e.get("key", ""),
+            "issues": [
+                {
+                    "key": i["key"],
+                    "summary": i["summary"],
+                    "status": i["status"],
+                    "priority": i["priority"],
+                    "assignee": i["assignee"],
+                    "est": i["original_estimate_hrs"],
+                }
+                for i in e["issues"]
+            ]
+        }
+        for e in epics
+    ], ensure_ascii=False)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MCPP Dashboard · April 2026</title>
+<title>MCPP Dashboard \u00b7 April 2026</title>
 <style>
   :root {{
     --bg: #0f1117;
@@ -282,21 +274,20 @@ def generate_html(issues, epics, stats, generated_at):
   a {{ color: var(--accent); text-decoration: none; }}
   a:hover {{ text-decoration: underline; }}
 
-  .header {{ background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }}
+  .header {{ background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }}
   .header-left h1 {{ font-size: 20px; font-weight: 700; color: #fff; }}
   .header-left p {{ font-size: 12px; color: var(--muted); margin-top: 2px; }}
   .updated {{ font-size: 11px; color: var(--muted); }}
 
   .main {{ max-width: 1100px; margin: 0 auto; padding: 28px 24px; }}
 
-  /* Stats row */
+  /* Stats */
   .stats {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }}
   .stat-card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }}
   .stat-label {{ font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }}
   .stat-value {{ font-size: 28px; font-weight: 700; color: #fff; }}
-  .stat-sub {{ font-size: 11px; color: var(--muted); margin-top: 2px; }}
 
-  /* Progress bar */
+  /* Progress */
   .progress-wrap {{ background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 28px; }}
   .progress-top {{ display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 13px; color: var(--muted); }}
   .progress-bar {{ background: var(--border); border-radius: 99px; height: 8px; }}
@@ -304,6 +295,18 @@ def generate_html(issues, epics, stats, generated_at):
 
   /* Section titles */
   .section-title {{ font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 14px; }}
+
+  /* Filters */
+  .filters {{ background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }}
+  .filter-label {{ font-size: 12px; color: var(--muted); white-space: nowrap; }}
+  select {{ background: #0f1117; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: 12px; cursor: pointer; }}
+  select:focus {{ outline: none; border-color: var(--accent); }}
+  .toggle-btn {{ display: flex; align-items: center; gap: 8px; background: #0f1117; border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; font-size: 12px; color: var(--muted); cursor: pointer; white-space: nowrap; transition: border-color .2s; }}
+  .toggle-btn:hover {{ border-color: var(--accent); color: var(--text); }}
+  .toggle-btn.active {{ border-color: var(--accent); color: var(--accent); }}
+  .toggle-dot {{ width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background .2s; }}
+  .toggle-btn.active .toggle-dot {{ background: var(--accent); }}
+  .filter-count {{ margin-left: auto; font-size: 11px; color: var(--muted); }}
 
   /* Priorities */
   .priorities-card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 28px; }}
@@ -318,24 +321,27 @@ def generate_html(issues, epics, stats, generated_at):
 
   /* Epics */
   .epic-card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 16px; overflow: hidden; }}
+  .epic-card.hidden {{ display: none; }}
   .epic-header {{ display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid var(--border); background: #1e2130; }}
   .epic-title {{ font-size: 14px; font-weight: 600; color: #fff; }}
   .epic-key {{ font-size: 11px; color: var(--muted); }}
   .epic-issues {{ padding: 0 18px; }}
+  .epic-empty {{ padding: 14px 0; font-size: 12px; color: var(--muted); text-align: center; display: none; }}
 
   .issue-row {{ display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }}
   .issue-row:last-child {{ border-bottom: none; }}
+  .issue-row.hidden {{ display: none; }}
   .issue-key {{ font-size: 12px; font-weight: 600; min-width: 90px; color: var(--accent); }}
   .issue-summary {{ flex: 1; font-size: 13px; color: var(--text); min-width: 200px; }}
   .issue-meta {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
   .badge {{ font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }}
   .assignee {{ font-size: 11px; color: var(--muted); }}
-  .unassigned {{ color: #4b5563; }}
   .est {{ font-size: 11px; color: var(--muted); background: var(--border); padding: 2px 7px; border-radius: 4px; }}
+  .no-results {{ text-align: center; padding: 40px; color: var(--muted); font-size: 13px; display: none; }}
 
   @media (max-width: 640px) {{
     .stats {{ grid-template-columns: repeat(2, 1fr); }}
-    .header {{ flex-direction: column; align-items: flex-start; gap: 8px; }}
+    .header {{ flex-direction: column; align-items: flex-start; }}
     .issue-summary {{ min-width: 100%; }}
   }}
 </style>
@@ -345,14 +351,13 @@ def generate_html(issues, epics, stats, generated_at):
 <div class="header">
   <div class="header-left">
     <h1>MCPP Sprint Dashboard</h1>
-    <p>April 2026 · PR Panthers</p>
+    <p>April 2026 \u00b7 PR Panthers</p>
   </div>
   <div class="updated">Auto-refreshed: {generated_at}</div>
 </div>
 
 <div class="main">
 
-  <!-- Stats -->
   <div class="stats">
     <div class="stat-card">
       <div class="stat-label">Total Issues</div>
@@ -372,7 +377,6 @@ def generate_html(issues, epics, stats, generated_at):
     </div>
   </div>
 
-  <!-- Progress -->
   <div class="progress-wrap">
     <div class="progress-top">
       <span>Sprint Completion</span>
@@ -383,17 +387,148 @@ def generate_html(issues, epics, stats, generated_at):
     </div>
   </div>
 
-  <!-- Priorities -->
   <div class="section-title">Current Priorities</div>
-  <div class="priorities-card">
-    {priorities_html}
+  <div class="priorities-card">{priorities_html}</div>
+
+  <div class="section-title">Sprint Issues by Epic</div>
+
+  <div class="filters">
+    <span class="filter-label">Filter:</span>
+    <select id="statusFilter">
+      <option value="">All Statuses</option>
+    </select>
+    <select id="assigneeFilter">
+      <option value="">All Assignees</option>
+    </select>
+    <button class="toggle-btn" id="hideCompletedBtn" onclick="toggleCompleted()">
+      <span class="toggle-dot"></span>
+      Hide Completed
+    </button>
+    <span class="filter-count" id="filterCount"></span>
   </div>
 
-  <!-- Epics + Issues -->
-  <div class="section-title">Sprint Issues by Epic</div>
-  {epics_html}
+  <div id="epicsContainer"></div>
+  <div class="no-results" id="noResults">No issues match the current filters.</div>
 
 </div>
+
+<script>
+const JIRA_BASE = "{jira_base}";
+const EPICS = {epics_json};
+
+const STATUS_COLORS = {{
+  "Done": "#22c55e", "In Progress": "#3b82f6", "To Do": "#94a3b8",
+  "Backlog": "#94a3b8", "Under Review": "#f59e0b", "Blocked": "#ef4444",
+  "In Review": "#8b5cf6"
+}};
+const PRIORITY_COLORS = {{
+  "Highest": "#ef4444", "High": "#f97316", "Medium": "#f59e0b",
+  "Low": "#22c55e", "Lowest": "#94a3b8"
+}};
+
+let hideCompleted = false;
+
+function sc(s) {{ return STATUS_COLORS[s] || "#94a3b8"; }}
+function pc(p) {{ return PRIORITY_COLORS[p] || "#94a3b8"; }}
+
+function populateFilters() {{
+  const statuses = new Set();
+  const assignees = new Set();
+  EPICS.forEach(e => e.issues.forEach(i => {{
+    statuses.add(i.status);
+    assignees.add(i.assignee);
+  }}));
+
+  const sf = document.getElementById("statusFilter");
+  const af = document.getElementById("assigneeFilter");
+
+  [...statuses].sort().forEach(s => {{
+    const o = document.createElement("option");
+    o.value = s; o.textContent = s;
+    sf.appendChild(o);
+  }});
+  [...assignees].sort().forEach(a => {{
+    const o = document.createElement("option");
+    o.value = a; o.textContent = a || "Unassigned";
+    af.appendChild(o);
+  }});
+}}
+
+function renderEpics() {{
+  const statusVal = document.getElementById("statusFilter").value;
+  const assigneeVal = document.getElementById("assigneeFilter").value;
+  const container = document.getElementById("epicsContainer");
+  container.innerHTML = "";
+  let totalVisible = 0;
+
+  EPICS.forEach(epic => {{
+    const filteredIssues = epic.issues.filter(i => {{
+      if (hideCompleted && i.status === "Done") return false;
+      if (statusVal && i.status !== statusVal) return false;
+      if (assigneeVal && i.assignee !== assigneeVal) return false;
+      return true;
+    }});
+
+    const card = document.createElement("div");
+    card.className = "epic-card";
+
+    const epicKeyHtml = epic.key
+      ? `<a href="${{JIRA_BASE}}/browse/${{epic.key}}" target="_blank" class="epic-key">${{epic.key}}</a>`
+      : "";
+
+    let issuesHtml = filteredIssues.map(i => {{
+      const sColor = sc(i.status);
+      const pColor = pc(i.priority);
+      const estHtml = i.est ? `<span class="est">${{i.est}}h</span>` : "";
+      const assigneeHtml = i.assignee && i.assignee !== "Unassigned"
+        ? `<span class="assignee">${{i.assignee}}</span>`
+        : `<span class="assignee" style="color:#4b5563">Unassigned</span>`;
+      return `
+        <div class="issue-row">
+          <a class="issue-key" href="${{JIRA_BASE}}/browse/${{i.key}}" target="_blank">${{i.key}}</a>
+          <div class="issue-summary">${{i.summary}}</div>
+          <div class="issue-meta">
+            <span class="badge" style="background:${{sColor}}20;color:${{sColor}};border:1px solid ${{sColor}}40">${{i.status}}</span>
+            <span class="badge" style="background:${{pColor}}20;color:${{pColor}};border:1px solid ${{pColor}}40">${{i.priority}}</span>
+            ${{assigneeHtml}}
+            ${{estHtml}}
+          </div>
+        </div>`;
+    }}).join("");
+
+    if (filteredIssues.length === 0) {{
+      issuesHtml = `<div class="epic-empty" style="display:block">No matching issues</div>`;
+    }}
+
+    card.innerHTML = `
+      <div class="epic-header">
+        <div class="epic-title">${{epic.name}}</div>
+        ${{epicKeyHtml}}
+      </div>
+      <div class="epic-issues">${{issuesHtml}}</div>`;
+
+    container.appendChild(card);
+    totalVisible += filteredIssues.length;
+  }});
+
+  document.getElementById("filterCount").textContent =
+    `${{totalVisible}} issue${{totalVisible !== 1 ? "s" : ""}} shown`;
+  document.getElementById("noResults").style.display = totalVisible === 0 ? "block" : "none";
+}}
+
+function toggleCompleted() {{
+  hideCompleted = !hideCompleted;
+  const btn = document.getElementById("hideCompletedBtn");
+  btn.classList.toggle("active", hideCompleted);
+  renderEpics();
+}}
+
+document.getElementById("statusFilter").addEventListener("change", renderEpics);
+document.getElementById("assigneeFilter").addEventListener("change", renderEpics);
+
+populateFilters();
+renderEpics();
+</script>
 </body>
 </html>"""
     return html
