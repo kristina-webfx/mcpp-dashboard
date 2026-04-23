@@ -97,9 +97,8 @@ def fetch_jira_issues():
         batch = data.get("issues", [])
         issues.extend(batch)
 
-        total = data.get("total") or data.get("totalCount") or len(issues)
-        print(f"  Page fetched: {len(batch)} issues, total={total}, keys={list(data.keys())}")
-        if start_at + max_results >= total:
+        print(f"  Page fetched: {len(batch)} issues, keys={list(data.keys())}")
+        if data.get("isLast", True) or len(batch) < max_results:
             break
         start_at += max_results
 
@@ -396,11 +395,24 @@ def main():
     print(f"  Found {len(raw)} issues")
 
     issues = parse_issues(raw)
+
+    # Debug: show sample of what we parsed
+    if issues:
+        sample = issues[0]
+        print(f"  Sample issue: key={sample['key']} status={sample['status']} parent_issuetype={sample['parent_issuetype']} parent_summary={sample['parent_summary']!r}")
+    else:
+        print("  WARNING: No issues parsed from raw data!")
+        if raw:
+            print(f"  Raw sample keys: {list(raw[0].keys())}")
+            print(f"  Raw sample fields keys: {list(raw[0].get('fields', {}).keys())}")
+
     epics = group_by_epic(issues)
     stats = compute_stats(issues)
 
     generated_at = datetime.now(timezone.utc).strftime("%B %d, %Y at %H:%M UTC")
     print(f"  Grouped into {len(epics)} epics")
+    for e in epics[:3]:
+        print(f"    Epic: {e['name']!r} ({len(e['issues'])} issues)")
     print(f"  Stats: {stats}")
 
     print("Generating index.html...")
