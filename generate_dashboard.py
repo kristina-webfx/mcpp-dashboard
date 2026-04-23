@@ -81,14 +81,14 @@ def fetch_jira_issues():
     max_results = 100
 
     while True:
-        url = f"{JIRA_BASE_URL}/rest/api/3/search"
-        params = {
+        url = f"{JIRA_BASE_URL}/rest/api/3/search/jql"
+        payload = {
             "jql": JQL,
-            "fields": FIELDS,
+            "fields": FIELDS.split(","),
             "startAt": start_at,
             "maxResults": max_results,
         }
-        resp = requests.get(url, headers=HEADERS, params=params)
+        resp = requests.post(url, headers={**HEADERS, "Content-Type": "application/json"}, json=payload)
         resp.raise_for_status()
         data = resp.json()
 
