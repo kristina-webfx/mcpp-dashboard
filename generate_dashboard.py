@@ -97,7 +97,9 @@ def fetch_jira_issues():
         batch = data.get("issues", [])
         issues.extend(batch)
 
-        if start_at + max_results >= data["total"]:
+        total = data.get("total") or data.get("totalCount") or len(issues)
+        print(f"  Page fetched: {len(batch)} issues, total={total}, keys={list(data.keys())}")
+        if start_at + max_results >= total:
             break
         start_at += max_results
 
