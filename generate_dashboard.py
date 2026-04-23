@@ -59,8 +59,11 @@ PRIORITIES = [
 # JIRA CONFIG
 # ─────────────────────────────────────────────
 JIRA_BASE_URL = "https://webfx.atlassian.net"
-JIRA_EMAIL = os.environ["JIRA_EMAIL"]
-JIRA_API_TOKEN = os.environ["JIRA_API_TOKEN"]
+JIRA_EMAIL = os.environ.get("JIRA_EMAIL", "").strip()
+JIRA_API_TOKEN = os.environ.get("JIRA_API_TOKEN", "").strip()
+
+if not JIRA_EMAIL or not JIRA_API_TOKEN:
+    raise ValueError(f"Missing credentials! JIRA_EMAIL={'SET' if JIRA_EMAIL else 'EMPTY'}, JIRA_API_TOKEN={'SET' if JIRA_API_TOKEN else 'EMPTY'}")
 JIRA_CLOUD_ID = "a7f46cbf-0128-46ba-9a34-eb72e893d05e"
 
 AUTH = b64encode(f"{JIRA_EMAIL}:{JIRA_API_TOKEN}".encode()).decode()
