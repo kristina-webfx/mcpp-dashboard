@@ -19,38 +19,38 @@ from datetime import datetime, timezone
 # ─────────────────────────────────────────────
 PRIORITIES = [
     {
+        "title": "Advertising Opt-Out",
+        "status": "Done!",
+        "note": ""
+    },
+    {
         "title": "RAFX C360FX Integration + Results Pages",
+        "status": "Under Review",
+        "note": ""
+    },
+    {
+        "title": "Brand Impressions Report Updates",
         "status": "In Progress",
+        "note": ""
+    },
+    {
+        "title": "Ingest Nutshell Form IDs for Deduplication",
+        "status": "Under Review",
+        "note": ""
+    },
+    {
+        "title": "DealerFX: Pipeline Assignment for Child Sites",
+        "status": "Under Review",
+        "note": ""
+    },
+    {
+        "title": "React 19 Wrap-Up",
+        "status": "Under Review",
         "note": ""
     },
     {
         "title": "Email in C360FX Timelines + EmailMarketingFX Attribution",
         "status": "In Progress",
-        "note": ""
-    },
-    {
-        "title": "Brand Impressions Report Updates",
-        "status": "Backlog",
-        "note": ""
-    },
-    {
-        "title": "Advertising Opt-Out",
-        "status": "Under Review",
-        "note": ""
-    },
-    {
-        "title": "Ingest Nutshell Form IDs for Deduplication",
-        "status": "Backlog",
-        "note": ""
-    },
-    {
-        "title": "OmniChannel Inbox: CallTrackerFX SMS Replies",
-        "status": "Blocked",
-        "note": "Blocked: CallTrackerFX SMS Replies dependency"
-    },
-    {
-        "title": "Data Storytelling: ProspectorFX, App Notifications & PersonalizeFX",
-        "status": "Backlog",
         "note": ""
     },
 ]
