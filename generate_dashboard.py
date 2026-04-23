@@ -89,6 +89,8 @@ def fetch_jira_issues():
             "maxResults": max_results,
         }
         resp = requests.post(url, headers={**HEADERS, "Content-Type": "application/json"}, json=payload)
+        if not resp.ok:
+            print(f"Jira error {resp.status_code}: {resp.text}")
         resp.raise_for_status()
         data = resp.json()
 
