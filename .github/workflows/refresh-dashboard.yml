@@ -25,6 +25,14 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      - name: Debug secrets
+        run: |
+          if [ -z "$JIRA_EMAIL" ]; then echo "JIRA_EMAIL is EMPTY"; else echo "JIRA_EMAIL is SET"; fi
+          if [ -z "$JIRA_API_TOKEN" ]; then echo "JIRA_API_TOKEN is EMPTY"; else echo "JIRA_API_TOKEN is SET"; fi
+        env:
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
       - name: Generate dashboard
         env:
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
