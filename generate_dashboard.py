@@ -25,7 +25,7 @@ PRIORITIES = [
     },
     {
         "title": "RAFX C360FX Integration + Results Pages",
-        "status": "Under Review",
+        "status": "Done!",
         "note": ""
     },
     {
@@ -40,12 +40,12 @@ PRIORITIES = [
     },
     {
         "title": "DealerFX: Pipeline Assignment for Child Sites",
-        "status": "Under Review",
+        "status": "Done!",
         "note": ""
     },
     {
         "title": "React 19 Wrap-Up",
-        "status": "Under Review",
+        "status": "Done!",
         "note": ""
     },
     {
