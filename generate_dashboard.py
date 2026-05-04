@@ -1,6 +1,6 @@
 """
 MCPP Dashboard Generator
-Fetches April 2026 sprint data from Jira and generates index.html
+Fetches May 2026 sprint data from Jira and generates index.html
 
 TO UPDATE PRIORITIES: Edit the PRIORITIES list below.
 Each entry has: title, status, and optional note.
@@ -19,38 +19,38 @@ from datetime import datetime, timezone
 # ─────────────────────────────────────────────
 PRIORITIES = [
     {
-        "title": "Advertising Opt-Out",
-        "status": "Done!",
+        "title": "C360 filter additions & improvements",
+        "status": "To Do",
         "note": ""
     },
     {
-        "title": "RAFX C360FX Integration + Results Pages",
-        "status": "Done!",
-        "note": ""
-    },
-    {
-        "title": "Brand Impressions Report Updates",
+        "title": "Ingest TTD ad views as impressions",
         "status": "In Progress",
         "note": ""
     },
     {
-        "title": "Ingest Nutshell Form IDs for Deduplication",
-        "status": "Under Review",
+        "title": "AdTechFX AI Insights",
+        "status": "To Do",
         "note": ""
     },
     {
-        "title": "DealerFX: Pipeline Assignment for Child Sites",
-        "status": "Done!",
+        "title": "Remy: AdTechFX addition",
+        "status": "To Do",
         "note": ""
     },
     {
-        "title": "React 19 Wrap-Up",
-        "status": "Done!",
+        "title": "Give AdTechFX attribution if no other paid channel before conversion (7 day window)",
+        "status": "To Do",
         "note": ""
     },
     {
-        "title": "Email in C360FX Timelines + EmailMarketingFX Attribution",
-        "status": "In Progress",
+        "title": "AdTechFX: Changelog",
+        "status": "To Do",
+        "note": ""
+    },
+    {
+        "title": "Remaining AdTechFX DataIQ alerts",
+        "status": "To Do",
         "note": ""
     },
 ]
@@ -72,7 +72,7 @@ HEADERS = {
     "Accept": "application/json",
 }
 
-SPRINT_LABEL = "April2026"
+SPRINT_LABEL = "May2026"
 JQL = f'project = MCPP AND labels = "{SPRINT_LABEL}" AND status != "Refinement" ORDER BY priority ASC'
 FIELDS = "summary,status,priority,assignee,parent,timeoriginalestimate,issuetype,labels"
 
