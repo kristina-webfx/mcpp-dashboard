@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 PRIORITIES = [
     {
         "title": "C360 filter additions & improvements",
-        "status": "To Do",
+        "status": "In Progress",
         "note": ""
     },
     {
