@@ -19,6 +19,11 @@ from datetime import datetime, timezone
 # ─────────────────────────────────────────────
 PRIORITIES = [
     {
+        "title": "Finish EMFX entries in Contact Timelines",
+        "status": "In Progress",
+        "note": "Est. Launch 4/30/26"
+    },
+    {
         "title": "C360 filter additions & improvements",
         "status": "In Progress",
         "note": ""
