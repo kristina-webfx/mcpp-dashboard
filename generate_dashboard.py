@@ -44,18 +44,13 @@ PRIORITIES = [
         "note": ""
     },
     {
-        "title": "Give AdTechFX attribution if no other paid channel before conversion (7 day window)",
-        "status": "To Do",
+        "title": "Data Storytelling Wins",
+        "status": "In Progress",
         "note": ""
     },
     {
-        "title": "AdTechFX: Changelog",
-        "status": "To Do",
-        "note": ""
-    },
-    {
-        "title": "Remaining AdTechFX DataIQ alerts",
-        "status": "To Do",
+        "title": "Remaining FE AdTechFX DataIQ alerts",
+        "status": "In Progress",
         "note": ""
     },
 ]
