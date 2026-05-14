@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 PRIORITIES = [
     {
         "title": "Finish EMFX entries in Contact Timelines",
-        "status": "In Progress",
+        "status": "Done",
         "note": "Est. Launch 4/30/26"
     },
     {
