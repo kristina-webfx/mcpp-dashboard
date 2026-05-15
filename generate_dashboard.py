@@ -45,7 +45,7 @@ PRIORITIES = [
     },
     {
         "title": "Data Storytelling Wins",
-        "status": "In Progress",
+        "status": "Done",
         "note": ""
     },
     {
