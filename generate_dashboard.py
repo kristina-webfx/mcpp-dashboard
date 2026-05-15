@@ -25,8 +25,8 @@ PRIORITIES = [
     },
     {
         "title": "C360 filter additions & improvements",
-        "status": "In Progress",
-        "note": ""
+        "status": "Backfill",
+        "note": "est. completion for 5/26 launch"
     },
     {
         "title": "Ingest TTD ad views as impressions",
