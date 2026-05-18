@@ -204,7 +204,8 @@ def compute_stats(issues):
     in_progress = sum(1 for i in issues if i["status"] == "In Progress")
     todo = total - done - in_progress
     pct = round((done / total) * 100) if total else 0
-    return {"total": total, "done": done, "in_progress": in_progress, "todo": todo, "pct": pct}
+    total_hrs = sum(i["original_estimate_hrs"] for i in issues if i["original_estimate_hrs"])
+    return {"total": total, "done": done, "in_progress": in_progress, "todo": todo, "pct": pct, "total_hrs": round(total_hrs, 1)}
 
 
 def build_priorities_html():
@@ -283,7 +284,7 @@ def generate_html(issues, epics, stats, generated_at):
   .main {{ max-width: 1100px; margin: 0 auto; padding: 28px 24px; }}
 
   /* Stats */
-  .stats {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }}
+  .stats {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 28px; }}
   .stat-card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; }}
   .stat-label {{ font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }}
   .stat-value {{ font-size: 28px; font-weight: 700; color: #fff; }}
@@ -375,6 +376,11 @@ def generate_html(issues, epics, stats, generated_at):
     <div class="stat-card">
       <div class="stat-label">To Do / Backlog</div>
       <div class="stat-value" style="color:#94a3b8">{stats["todo"]}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Est. Hours</div>
+      <div class="stat-value" style="color:#a78bfa">{stats["total_hrs"]}</div>
+      <div class="stat-sub">across all issues</div>
     </div>
   </div>
 
