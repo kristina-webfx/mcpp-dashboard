@@ -2,8 +2,8 @@ name: Refresh MCPP Dashboard
 
 on:
   schedule:
-    # 8 AM ET = 12:00 UTC (EST) / 13:00 UTC (EDT)
-    - cron: '0 12 * * *'
+    # 6 AM ET = 10:00 UTC (EST) / 11:00 UTC (EDT)
+    - cron: '0 10 * * *'
   workflow_dispatch: # Allow manual trigger from GitHub Actions tab
 
 permissions:
