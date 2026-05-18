@@ -188,6 +188,7 @@ def priority_color(priority):
 
 def priority_status_color(status):
     colors = {
+        "Done": "#22c55e",
         "In Progress": "#3b82f6",
         "Backlog": "#94a3b8",
         "Blocked": "#ef4444",
