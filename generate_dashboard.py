@@ -29,18 +29,8 @@ PRIORITIES = [
         "note": "est. completion for 5/26 launch"
     },
     {
-        "title": "Ingest TTD ad views as impressions",
+        "title": "Part 1: Ingest TTD ad views as impressions",
         "status": "In Progress",
-        "note": ""
-    },
-    {
-        "title": "AdTechFX AI Insights",
-        "status": "To Do",
-        "note": ""
-    },
-    {
-        "title": "Remy: AdTechFX addition",
-        "status": "To Do",
         "note": ""
     },
     {
@@ -51,6 +41,26 @@ PRIORITIES = [
     {
         "title": "Remaining FE AdTechFX DataIQ alerts",
         "status": "In Progress",
+        "note": ""
+    },
+    {
+        "title": "Remaining BE AdTechFX DataIQ alerts",
+        "status": "In Progress",
+        "note": ""
+    },
+    {
+        "title": "DealerFX: Addition of CallTrackerFX",
+        "status": "To Do",
+        "note": ""
+    },
+    {
+        "title": "Brand Impressions Report: Add LinkedIn",
+        "status": "To Do",
+        "note": ""
+    },
+    {
+        "title": "Progress domain maturity for prospecting domain",
+        "status": "To Do",
         "note": ""
     },
 ]
