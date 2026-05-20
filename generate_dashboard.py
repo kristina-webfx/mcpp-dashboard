@@ -362,8 +362,8 @@ def generate_html(issues, epics, stats, generated_at):
 
 <div class="header">
   <div class="header-left">
-    <h1>MCPP Sprint Dashboard</h1>
-    <p>April 2026 \u00b7 PR Panthers</p>
+    <h1>PR Panthers Dashboard</h1>
+    <p>April 2026 \u00b7 Roadmap Priorities</p>
   </div>
   <div class="updated">Auto-refreshed: {generated_at}</div>
 </div>
