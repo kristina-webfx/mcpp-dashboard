@@ -25,12 +25,12 @@ PRIORITIES = [
     },
     {
         "title": "C360 filter additions & improvements",
-        "status": "Backfill",
+        "status": "Done",
         "note": "est. completion for 5/26 launch"
     },
     {
         "title": "Part 1: Ingest TTD ad views as impressions",
-        "status": "In Progress",
+        "status": "Backfill",
         "note": ""
     },
     {
@@ -40,7 +40,7 @@ PRIORITIES = [
     },
     {
         "title": "Remaining FE AdTechFX DataIQ alerts",
-        "status": "In Progress",
+        "status": "Done",
         "note": ""
     },
     {
@@ -50,7 +50,7 @@ PRIORITIES = [
     },
     {
         "title": "DealerFX: Addition of CallTrackerFX",
-        "status": "To Do",
+        "status": "In Progress",
         "note": ""
     },
     {
@@ -60,7 +60,7 @@ PRIORITIES = [
     },
     {
         "title": "Progress domain maturity for prospecting domain",
-        "status": "To Do",
+        "status": "In Progress",
         "note": ""
     },
 ]
