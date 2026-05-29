@@ -50,12 +50,12 @@ PRIORITIES = [
     },
     {
         "title": "DealerFX: Addition of CallTrackerFX",
-        "status": "Under Review",
+        "status": "Done",
         "note": ""
     },
     {
         "title": "Brand Impressions Report: Add LinkedIn",
-        "status": "Under Review",
+        "status": "Done",
         "note": ""
     },
     {
