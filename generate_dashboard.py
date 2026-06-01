@@ -19,48 +19,38 @@ from datetime import datetime, timezone
 # ─────────────────────────────────────────────
 PRIORITIES = [
     {
-        "title": "Finish EMFX entries in Contact Timelines",
-        "status": "Done",
-        "note": "Est. Launch 4/30/26"
+        "title": "AdTechFX AI Insights",
+        "status": "In Progress",
+        "note": "Est. Launch 5/31/26"
     },
     {
-        "title": "C360 filter additions & improvements",
-        "status": "Done",
+        "title": "Remy in AdTechFX",
+        "status": "Todo",
         "note": "est. completion for 5/26 launch"
     },
     {
-        "title": "Part 1: Ingest TTD ad views as impressions",
-        "status": "Backfill",
+        "title": "Pentest: get remaining items submitted for retest",
+        "status": "Todo",
         "note": ""
     },
     {
-        "title": "Data Storytelling Wins",
-        "status": "Done",
-        "note": ""
-    },
-    {
-        "title": "Remaining FE AdTechFX DataIQ alerts",
-        "status": "Done",
-        "note": ""
-    },
-    {
-        "title": "Remaining BE AdTechFX DataIQ alerts",
+        "title": "OBS Billing Plans & Add-ons Page",
         "status": "In Progress",
         "note": ""
     },
     {
-        "title": "DealerFX: Addition of CallTrackerFX",
-        "status": "Done",
+        "title": "Finish: Remaining BE AdTechFX DataIQ alerts",
+        "status": "Todo",
         "note": ""
     },
     {
-        "title": "Brand Impressions Report: Add LinkedIn",
-        "status": "Done",
+        "title": "Update AdTechFX to use Adview Impressions",
+        "status": "Todo",
         "note": ""
     },
     {
-        "title": "Progress domain maturity for prospecting domain",
-        "status": "In Progress",
+        "title": "ReviewAccelerationFX: Email Revamp",
+        "status": "Todo",
         "note": ""
     },
 ]
