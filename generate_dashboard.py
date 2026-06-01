@@ -1,6 +1,6 @@
 """
 MCPP Dashboard Generator
-Fetches May 2026 sprint data from Jira and generates index.html
+Fetches June 2026 sprint data from Jira and generates index.html
 
 TO UPDATE PRIORITIES: Edit the PRIORITIES list below.
 Each entry has: title, status, and optional note.
@@ -82,7 +82,7 @@ HEADERS = {
     "Accept": "application/json",
 }
 
-SPRINT_LABEL = "May2026"
+SPRINT_LABEL = "June2026"
 JQL = f'project = MCPP AND labels = "{SPRINT_LABEL}" AND status != "Refinement" ORDER BY priority ASC'
 FIELDS = "summary,status,priority,assignee,parent,timeoriginalestimate,issuetype,labels"
 
