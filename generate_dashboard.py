@@ -26,7 +26,7 @@ PRIORITIES = [
     {
         "title": "Remy in AdTechFX",
         "status": "Todo",
-        "note": "est. completion for 5/26 launch"
+        "note": ""
     },
     {
         "title": "Pentest: get remaining items submitted for retest",
