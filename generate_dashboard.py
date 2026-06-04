@@ -30,12 +30,12 @@ PRIORITIES = [
     },
     {
         "title": "Pentest: get remaining items submitted for retest",
-        "status": "Todo",
+        "status": "In Progress",
         "note": ""
     },
     {
         "title": "OBS Billing Plans & Add-ons Page",
-        "status": "In Progress",
+        "status": "Under Review",
         "note": ""
     },
     {
@@ -44,13 +44,13 @@ PRIORITIES = [
         "note": ""
     },
     {
-        "title": "Update AdTechFX to use Adview Impressions",
+        "title": "Overage Reporting: combine EMFX & CaTFX overage emails",
         "status": "Todo",
         "note": ""
     },
     {
         "title": "ReviewAccelerationFX: Email Revamp",
-        "status": "Todo",
+        "status": "In Progress",
         "note": ""
     },
 ]
