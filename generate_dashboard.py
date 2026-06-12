@@ -25,23 +25,23 @@ PRIORITIES = [
     },
     {
         "title": "Remy in AdTechFX",
-        "status": "Todo",
-        "note": ""
-    },
-    {
-        "title": "Pentest: get remaining items submitted for retest",
         "status": "In Progress",
         "note": ""
     },
     {
+        "title": "Pentest: get remaining items submitted for retest",
+        "status": "Done",
+        "note": ""
+    },
+    {
         "title": "OBS Billing Plans & Add-ons Page",
-        "status": "Under Review",
+        "status": "Done",
         "note": ""
     },
     {
         "title": "Finish: Remaining BE AdTechFX DataIQ alerts",
-        "status": "Todo",
-        "note": ""
+        "status": "Done",
+        "note": "Awaiting reply from Liveramp"
     },
     {
         "title": "Overage Reporting: combine EMFX & CaTFX overage emails",
