@@ -41,7 +41,7 @@ PRIORITIES = [
     {
         "title": "Finish: Remaining BE AdTechFX DataIQ alerts",
         "status": "Done",
-        "note": "Awaiting reply from Liveramp"
+        "note": ""
     },
     {
         "title": "Overage Reporting: combine EMFX & CaTFX overage emails",
