@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 PRIORITIES = [
     {
         "title": "AdTechFX AI Insights",
-        "status": "In Progress",
+        "status": "Under Review",
         "note": "Est. Launch 5/31/26"
     },
     {
