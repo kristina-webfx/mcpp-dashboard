@@ -45,7 +45,7 @@ PRIORITIES = [
     },
     {
         "title": "Overage Reporting: combine EMFX & CaTFX overage emails",
-        "status": "Todo",
+        "status": "Done",
         "note": ""
     },
     {
