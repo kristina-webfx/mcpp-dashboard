@@ -261,7 +261,7 @@ def generate_html(issues, epics, stats, generated_at):
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MCPP Dashboard \u00b7 April 2026</title>
+<title>MCPP Dashboard \u00b7 July 2026</title>
 <style>
   :root {{
     --bg: #0f1117;
