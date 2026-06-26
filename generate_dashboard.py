@@ -25,7 +25,7 @@ PRIORITIES = [
     },
     {
         "title": "Remy in AdTechFX",
-        "status": "In Progress",
+        "status": "Under Review",
         "note": ""
     },
     {
